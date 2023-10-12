@@ -8,11 +8,12 @@ setup-dev:
 lint:
 	golangci-lint run
 
-test:
+test: lint sec
 	mkdir -p output
 	gotestsum --format=testname -- -coverprofile=output/coverage.out ./...
 
 sec:
 	gosec ./...
 
-pre-commit: lint sec test
+test-watch:
+	gotestsum --format=testname --watch ./...
