@@ -4,7 +4,6 @@ setup-dev:
 	go get -u github.com/securego/gosec/cmd/gosec
 	go get -u github.com/jstemmer/go-junit-report
 
-
 lint:
 	golangci-lint run
 
