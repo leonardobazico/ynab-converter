@@ -1,5 +1,7 @@
 # Convert CashApp csv report to You Need a Budget csv report
 
+![coverage](https://raw.githubusercontent.com/leonardobazico/cashapp-ynab-converter/badges/.badges/main/coverage.svg)
+
 This solution is based on the [Formatting a CSV File](https://support.ynab.com/en_us/formatting-a-csv-file-an-overview-BJvczkuRq)
 
 The CashApp csv report is a bit different than the YNAB csv report. This tool converts the CashApp csv report to the YNAB csv report.
