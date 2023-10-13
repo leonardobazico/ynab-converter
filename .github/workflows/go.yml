@@ -39,3 +39,13 @@ jobs:
 
       - name: Test
         run: make test-coverage
+
+      - name: check test coverage
+        id: coverage ## this step must have id
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          profile: output/coverage.out
+          local-prefix: github.com/leonardobazico/cashapp-ynab-converter
+          threshold-file: 80
+          threshold-package: 80
+          threshold-total: 95
