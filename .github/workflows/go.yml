@@ -5,24 +5,37 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    env:
+      GO111MODULE: on
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.19'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+          cache-dependency-path: |
+            go.sum
+            go.sum
 
-    - name: Setup dev dependencies
-      run: make setup-dev
+      - name: Install CI dependencies
+        run: make install-ci-dependencies
 
-    - name: Test
-      run: make test
+      - name: Lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.54
+
+      - name: Security check
+        run: make security-check
+
+      - name: Test
+        run: make test-coverage

@@ -38,3 +38,12 @@ cash2ynab input.csv > output.csv
 
 This is a simple cli tool written in Go lang.
 gotestsum is used for testing.
+
+### Continuous Integration
+
+This project uses GitHub Actions for CI.
+In order to test the GIthub Actions locally, you can use [act](https://github.com/nektos/act).
+
+```bash
+act
+```
