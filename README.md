@@ -47,5 +47,5 @@ This project uses GitHub Actions for CI.
 In order to test the GIthub Actions locally, you can use [act](https://github.com/nektos/act).
 
 ```bash
-act
+act -s GITHUB_TOKEN="$(gh auth token)"
 ```
