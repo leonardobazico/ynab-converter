@@ -17,3 +17,5 @@ trap restoreStashedIfAny EXIT
 trap restoreStashedIfAny ERR
 
 make test
+
+make prettier

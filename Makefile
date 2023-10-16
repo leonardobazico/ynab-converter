@@ -28,3 +28,6 @@ test-coverage:
 add-pre-commit-hook:
 	rm -f .git/hooks/pre-commit
 	ln -s -f ../../scripts/pre-commit.sh .git/hooks/pre-commit
+
+prettier:
+	npx prettier '**/*.{yml,md}' --write
