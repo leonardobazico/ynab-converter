@@ -1,4 +1,4 @@
-# Convert CashApp csv report to You Need a Budget csv report
+# Convert CashApp csv report to You Need a Budget (YNAB) format
 
 ![coverage](https://raw.githubusercontent.com/leonardobazico/cashapp-ynab-converter/badges/.badges/main/coverage.svg)
 
