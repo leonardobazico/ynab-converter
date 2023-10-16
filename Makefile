@@ -24,3 +24,7 @@ test-coverage:
 	mkdir -p output
 	$(GOTEST) -- -coverprofile=output/coverage.out ./...
 	go tool cover -html=output/coverage.out -o=output/coverage.html
+
+add-pre-commit-hook:
+	rm -f .git/hooks/pre-commit
+	ln -s -f ../../scripts/pre-commit.sh .git/hooks/pre-commit
