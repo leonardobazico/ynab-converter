@@ -4,3 +4,6 @@
 
 *.out
 output/
+
+# Compiled source #
+bin

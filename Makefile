@@ -31,3 +31,6 @@ add-pre-commit-hook:
 
 prettier:
 	npx prettier '**/*.{yml,md}' --write
+
+build-cli:
+	go build -o bin/ ./cmd/...
