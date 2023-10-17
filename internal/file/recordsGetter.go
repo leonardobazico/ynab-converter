@@ -1,5 +1,5 @@
 package file
 
-type FileRecordsGetter interface {
+type RecordsGetter interface {
 	GetRecordsFrom(filePath string) ([][]string, error)
 }

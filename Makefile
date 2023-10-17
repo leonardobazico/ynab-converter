@@ -11,6 +11,9 @@ setup-dev: install-ci-dependencies
 lint:
 	golangci-lint run
 
+lint-fix:
+	golangci-lint run --fix
+
 security-check:
 	gosec ./...
 

@@ -1,14 +1,33 @@
 package reports_test
 
 import (
-	"cash2ynab/pkg/reports"
 	"testing"
+
+	"cash2ynab/pkg/reports"
 )
 
 func TestCashAppTransaction(t *testing.T) {
+	t.Parallel()
+
 	t.Run("should create a CashAppTransaction from a record", func(t *testing.T) {
+		t.Parallel()
 		// Given
-		record := []string{"rmgsrz", "2023-10-06 19:56:39 EDT", "Cash Card Debit", "USD", "-$2.90", "$0", "-$2.90", "", "", "", "CARD CHARGED", "MTA*NYCT PAYGO", "", "Visa Debit 0987"}
+		record := []string{
+			"rmgsrz",
+			"2023-10-06 19:56:39 EDT",
+			"Cash Card Debit",
+			"USD",
+			"-$2.90",
+			"$0",
+			"-$2.90",
+			"",
+			"",
+			"",
+			"CARD CHARGED",
+			"MTA*NYCT PAYGO",
+			"",
+			"Visa Debit 0987",
+		}
 		expectedCashAppTransaction := reports.CashAppTransaction{
 			TransactionID:        "rmgsrz",
 			Date:                 "2023-10-06 19:56:39 EDT",
@@ -34,8 +53,25 @@ func TestCashAppTransaction(t *testing.T) {
 	})
 
 	t.Run("should implement Transaction interface", func(t *testing.T) {
+		t.Parallel()
+
 		// Given
-		record := []string{"rmgsrz", "2023-10-06 19:56:39 EDT", "Cash Card Debit", "USD", "-$2.90", "$0", "-$2.90", "", "", "", "CARD CHARGED", "MTA*NYCT PAYGO", "", "Visa Debit 0987"}
+		record := []string{
+			"rmgsrz",
+			"2023-10-06 19:56:39 EDT",
+			"Cash Card Debit",
+			"USD",
+			"-$2.90",
+			"$0",
+			"-$2.90",
+			"",
+			"",
+			"",
+			"CARD CHARGED",
+			"MTA*NYCT PAYGO",
+			"",
+			"Visa Debit 0987",
+		}
 		// When
 		cashAppTransaction := reports.NewCashAppTransaction(record)
 		// Then

@@ -4,15 +4,17 @@
 package main_test
 
 import (
+	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCash2ynab(t *testing.T) {
+	t.Parallel()
+
 	projectFolderPath := getProjectFolderPath(t)
 	cli := buildCli(t, projectFolderPath)
 	t.Run("should run cash2ynab command and get the output", func(t *testing.T) {
@@ -29,20 +31,27 @@ func TestCash2ynab(t *testing.T) {
 	})
 }
 
-func getProjectFolderPath(t testing.TB) string {
-	_, testFilePath, _, _ := runtime.Caller(0)
-	projectFolderPath := filepath.Dir(filepath.Dir(filepath.Dir(testFilePath)))
-	t.Logf("Current test basepath: %s", projectFolderPath)
+func getProjectFolderPath(tb testing.TB) string {
+	tb.Helper()
+
+	testFolder, _ := os.Getwd()
+	tb.Logf("Current test path: %s", testFolder)
+	projectFolderPath := filepath.Dir(filepath.Dir(testFolder))
+	tb.Logf("Current project folder: %s", projectFolderPath)
+
 	return projectFolderPath
 }
 
-func buildCli(t testing.TB, projectFolderPath string) string {
+func buildCli(tb testing.TB, projectFolderPath string) string {
+	tb.Helper()
+
 	cliPath := "bin/cash2ynab-test"
 	cmd := exec.Command("go", "build", "-o", cliPath, "cmd/cash2ynab/main.go")
 	cmd.Dir = projectFolderPath
 	err := cmd.Run()
 	if err != nil {
-		t.Fatal(err)
+		tb.Fatal(err)
 	}
+
 	return cliPath
 }

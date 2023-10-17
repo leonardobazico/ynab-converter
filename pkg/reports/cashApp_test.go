@@ -1,10 +1,11 @@
 package reports_test
 
 import (
+	"testing"
+
 	"cash2ynab/internal/file"
 	"cash2ynab/pkg/reports"
 	utils_test "cash2ynab/tests/utils"
-	"testing"
 )
 
 // CashAppReport is a struct that represents a Cash App report
@@ -12,6 +13,8 @@ import (
 // CashAppReport should be able to transform records from a CSV file into an array of CashAppTransaction
 
 func TestCashAppReport(t *testing.T) {
+	t.Parallel()
+
 	t.Run("should parse file and get an array of CashAppTransaction", func(t *testing.T) {
 		// Given
 		cashAppReport := reports.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))

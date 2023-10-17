@@ -1,0 +1,31 @@
+run:
+  allow-parallel-runners: true
+linters:
+  disable:
+    - forbidigo
+    - gofumpt
+    - ifshort
+    - tparallel
+    - wsl
+  presets:
+    - bugs
+    - comment
+    - complexity
+    - error
+    - format
+    - import
+    - metalinter
+    - module
+    - performance
+    - sql
+    - style
+    - test
+    - unused
+  fast: false
+
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - funlen

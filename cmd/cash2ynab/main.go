@@ -13,7 +13,6 @@ func main() {
 	if err != nil {
 		log.Printf("Error running cat command, %v\n", err)
 		log.Fatalf("output, %s\n", string(output))
-		return
 	}
 
 	fmt.Print(string(output))
