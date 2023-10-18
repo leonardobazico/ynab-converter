@@ -9,11 +9,17 @@ import (
 func main() {
 	fileToConvert := "tests/utils/examples/ynab_report_one_transaction.csv"
 	cmd := exec.Command("cat", fileToConvert)
+
 	output, err := cmd.CombinedOutput()
+	outputString := string(output)
 	if err != nil {
-		log.Printf("Error running cat command, %v\n", err)
-		log.Fatalf("output, %s\n", string(output))
+		log.Fatalf(
+			"Error running cat command, %v\n"+
+				"output, %s\n",
+			err,
+			outputString,
+		)
 	}
 
-	fmt.Print(string(output))
+	fmt.Print(outputString)
 }

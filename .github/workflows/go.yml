@@ -42,16 +42,13 @@ jobs:
         run: make security-check
 
       - name: Test
-        run: make test-coverage
-
-      - name: Build CLI
-        run: make build-cli
+        run: make test-ci
 
       - name: check test coverage
         id: coverage ## this step must have id
         uses: vladopajic/go-test-coverage@v2
         with:
-          profile: output/coverage.out
+          profile: coverage/profile.out
           local-prefix: github.com/leonardobazico/cashapp-ynab-converter
           threshold-file: 80
           threshold-package: 80
@@ -67,3 +64,6 @@ jobs:
           file-name: coverage.svg
           badge-branch: badges ## orphan branch where badge will be committed
           github-token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Build CLI
+        run: make build-cli
