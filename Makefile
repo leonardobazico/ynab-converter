@@ -2,8 +2,8 @@ GOTEST=gotestsum --format=testname
 
 install-ci-dependencies:
 	go version
-	go install gotest.tools/gotestsum
-	go install github.com/securego/gosec/cmd/gosec
+	go install gotest.tools/gotestsum@latest
+	go install github.com/securego/gosec/v2/cmd/gosec@latest
 
 setup-dev: install-ci-dependencies
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.54
@@ -37,3 +37,6 @@ prettier:
 
 build-cli:
 	go build -o bin/ ./cmd/...
+
+test-pipeline:
+	act -s GITHUB_TOKEN="$(gh auth token)"
