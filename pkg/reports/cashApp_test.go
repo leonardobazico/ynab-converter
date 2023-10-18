@@ -3,6 +3,8 @@ package reports_test
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"cash2ynab/internal/file"
 	"cash2ynab/pkg/reports"
 	utils_test "cash2ynab/tests/utils"
@@ -15,7 +17,20 @@ import (
 func TestCashAppReport(t *testing.T) {
 	t.Parallel()
 
+	t.Run("should return error when file does not exist", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cashAppReport := reports.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
+		// When
+		err := cashAppReport.ParseFileRecords("examples/does-not-exist.csv")
+		// Then
+		assert.Error(t, err)
+	})
+
 	t.Run("should parse file and get an array of CashAppTransaction", func(t *testing.T) {
+		t.Parallel()
+
 		// Given
 		cashAppReport := reports.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
 		// When

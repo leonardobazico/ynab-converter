@@ -9,10 +9,10 @@ setup-dev: install-ci-dependencies
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.54
 
 lint:
-	golangci-lint run
+	golangci-lint run ./...
 
 lint-fix:
-	golangci-lint run --fix
+	golangci-lint run --fix ./...
 
 security-check:
 	gosec ./...

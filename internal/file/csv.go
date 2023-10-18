@@ -23,7 +23,7 @@ func (reader *CsvReader) GetRecordsFrom(filePath string) ([][]string, error) {
 
 	remainingRecords, err := csvReader.ReadAll()
 	if err != nil {
-		return nil, fmt.Errorf("fail to read file: %w", err)
+		return nil, fmt.Errorf("fail to read csv file: %w", err)
 	}
 
 	return remainingRecords, nil

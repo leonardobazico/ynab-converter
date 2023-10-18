@@ -1,10 +1,11 @@
 run:
-  allow-parallel-runners: true
+  allow-parallel-runners: false
 linters:
   disable:
     - forbidigo
     - gofumpt
     - ifshort
+    - importas
     - tparallel
     - wsl
     - depguard
@@ -23,6 +24,15 @@ linters:
     - test
     - unused
   fast: false
+
+linters-settings:
+  goimports:
+    local-prefixes: cash2ynab/
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(cash2ynab)
 
 issues:
   exclude-rules:

@@ -3,6 +3,8 @@ package file_test
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"cash2ynab/internal/file"
 	utils_test "cash2ynab/tests/utils"
 )
@@ -25,6 +27,19 @@ func TestReadCsv(t *testing.T) {
 		if err.Error() != "fail to open file: open examples/does-not-exist.csv: file does not exist" {
 			t.Errorf("Expected a different error message. Got:\n%v", err.Error())
 		}
+	})
+
+	t.Run("should return error when file exists but is not a csv", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		filePath := "examples/not-a-csv.txt"
+		csvReader := file.NewCsvReader(utils_test.ExampleFilesFS)
+		// When
+		output, err := csvReader.GetRecordsFrom(filePath)
+		// Then
+		assert.Nil(t, output)
+		assert.ErrorContains(t, err, "fail to read csv file:")
 	})
 
 	t.Run("should not return error when file exists", func(t *testing.T) {
