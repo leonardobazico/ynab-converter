@@ -10,10 +10,6 @@ import (
 	utils_test "cash2ynab/tests/utils"
 )
 
-// CashAppReport is a struct that represents a Cash App report
-// it should have transactions represented by an array of CashAppTransaction
-// CashAppReport should be able to transform records from a CSV file into an array of CashAppTransaction
-
 func TestCashAppReport(t *testing.T) {
 	t.Parallel()
 

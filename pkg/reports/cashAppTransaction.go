@@ -1,5 +1,12 @@
 package reports
 
+import (
+	"fmt"
+	"strconv"
+	"strings"
+	"time"
+)
+
 type CashAppTransaction struct {
 	TransactionID        string
 	Date                 string
@@ -19,6 +26,27 @@ type CashAppTransaction struct {
 
 func (cashAppTransaction *CashAppTransaction) GetCounterparty() string {
 	return cashAppTransaction.Notes
+}
+
+func (cashAppTransaction *CashAppTransaction) GetDescription() string {
+	return cashAppTransaction.Status
+}
+
+func (cashAppTransaction *CashAppTransaction) GetAmount() (float32, error) {
+	amountWithoutDollarSign := strings.ReplaceAll(cashAppTransaction.Amount, "$", "")
+
+	amount, err := strconv.ParseFloat(amountWithoutDollarSign, 32)
+	if err != nil {
+		return 0, fmt.Errorf("error parsing amount: %w", err)
+	}
+
+	return float32(amount), nil
+}
+
+func (cashAppTransaction *CashAppTransaction) GetDatetime() (time.Time, error) {
+	datetime, err := time.Parse(time.DateTime+" MST", cashAppTransaction.Date)
+
+	return datetime, fmt.Errorf("error parsing date: %w", err)
 }
 
 func NewCashAppTransaction(record []string) CashAppTransaction {

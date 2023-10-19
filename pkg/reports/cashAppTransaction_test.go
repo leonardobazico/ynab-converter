@@ -2,6 +2,9 @@ package reports_test
 
 import (
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
 
 	"cash2ynab/pkg/reports"
 )
@@ -52,7 +55,7 @@ func TestCashAppTransaction(t *testing.T) {
 		}
 	})
 
-	t.Run("should implement Transaction interface", func(t *testing.T) {
+	t.Run("should implement report.Transaction interface", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
@@ -77,12 +80,43 @@ func TestCashAppTransaction(t *testing.T) {
 		// Then
 
 		t.Run("should GetCounterparty", func(t *testing.T) {
-			if cashAppTransaction.GetCounterparty() != "MTA*NYCT PAYGO" {
-				t.Errorf(
-					"Expected Counterparty to be MTA*NYCT PAYGO. Got %v",
-					cashAppTransaction.GetCounterparty(),
-				)
+			assert.Equal(t, "MTA*NYCT PAYGO", cashAppTransaction.GetCounterparty())
+		})
+
+		t.Run("should GetDescription", func(t *testing.T) {
+			assert.Equal(t, "CARD CHARGED", cashAppTransaction.GetDescription())
+		})
+
+		t.Run("should return error when amount is not a float", func(t *testing.T) {
+			// Given
+			cashAppNotFloatTransaction := reports.CashAppTransaction{
+				Amount: "not a float",
 			}
+			// When
+			_, err := cashAppNotFloatTransaction.GetAmount()
+			// Then
+			assert.Error(t, err)
+		})
+
+		t.Run("should GetAmount", func(t *testing.T) {
+			amount, _ := cashAppTransaction.GetAmount()
+			assert.Equal(t, float32(-2.90), amount)
+		})
+
+		t.Run("should return error when datetime is not valid", func(t *testing.T) {
+			// Given
+			cashAppNotValidDateTransaction := reports.CashAppTransaction{
+				Date: "not a valid date",
+			}
+			// When
+			_, err := cashAppNotValidDateTransaction.GetDatetime()
+			// Then
+			assert.Error(t, err)
+		})
+
+		t.Run("should GetDatetime", func(t *testing.T) {
+			date, _ := cashAppTransaction.GetDatetime()
+			assert.Equal(t, time.Date(2023, 10, 6, 19, 56, 39, 0, time.Local), date)
 		})
 	})
 }
