@@ -12,7 +12,7 @@ The CashApp csv input file looks like this:
 ```csv
 "Transaction ID","Date","Transaction Type","Currency","Amount","Fee","Net Amount","Asset Type","Asset Price","Asset Amount","Status","Notes","Name of sender/receiver","Account"
 "ywur7r","2023-10-07 16:12:36 EDT","Boost Payment","USD","$1","$0","$1","","","","CARD REFUNDED","Cash Reward","","Visa Debit 0987"
-"rmgsrz","2023-10-06 19:56:39 EDT","Cash Card Debit","USD","-$2.90","$0","-$2.90","","","","CARD CHARGED","MTA*NYCT PAYGO","","Visa Debit 0987"
+"rmgsrz","2023-10-06 23:59:59 EDT","Cash Card Debit","USD","-$2.90","$0","-$2.90","","","","CARD CHARGED","MTA*NYCT PAYGO","","Visa Debit 0987"
 "s048op","2023-10-06 19:19:48 EDT","Cash Card Debit","USD","-$2.90","$0","-$2.90","","","","CARD CHARGED","MTA*NYCT PAYGO","","Visa Debit 0987"
 "rnkyxvb","2023-06-13 00:00:57 EDT","Sent P2P","USD","-$10","$0","-$10",,"",,"PAYMENT SENT",,"Some business name","Visa Debit 1230"
 

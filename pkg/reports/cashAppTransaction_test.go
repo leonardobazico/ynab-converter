@@ -9,15 +9,13 @@ import (
 	"cash2ynab/pkg/reports"
 )
 
+//nolint:paralleltest
 func TestCashAppTransaction(t *testing.T) {
-	t.Parallel()
-
 	t.Run("should create a CashAppTransaction from a record", func(t *testing.T) {
-		t.Parallel()
 		// Given
 		record := []string{
 			"rmgsrz",
-			"2023-10-06 19:56:39 EDT",
+			"2023-10-06 23:59:59 EDT",
 			"Cash Card Debit",
 			"USD",
 			"-$2.90",
@@ -33,7 +31,7 @@ func TestCashAppTransaction(t *testing.T) {
 		}
 		expectedCashAppTransaction := reports.CashAppTransaction{
 			TransactionID:        "rmgsrz",
-			Date:                 "2023-10-06 19:56:39 EDT",
+			Date:                 "2023-10-06 23:59:59 EDT",
 			TransactionType:      "Cash Card Debit",
 			Currency:             "USD",
 			Amount:               "-$2.90",
@@ -56,12 +54,10 @@ func TestCashAppTransaction(t *testing.T) {
 	})
 
 	t.Run("should implement report.Transaction interface", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		record := []string{
 			"rmgsrz",
-			"2023-10-06 19:56:39 EDT",
+			"2023-10-06 23:59:59 EDT",
 			"Cash Card Debit",
 			"USD",
 			"-$2.90",
@@ -114,9 +110,30 @@ func TestCashAppTransaction(t *testing.T) {
 			assert.Error(t, err)
 		})
 
-		t.Run("should GetDatetime", func(t *testing.T) {
-			date, _ := cashAppTransaction.GetDatetime()
-			assert.Equal(t, time.Date(2023, 10, 6, 19, 56, 39, 0, time.Local), date)
+		t.Run("should GetDatetime converted to UTC", func(t *testing.T) {
+			// Given
+			t.Setenv("TZ", "UTC")
+			cashAppTransaction := reports.CashAppTransaction{
+				Date: "2023-12-06 23:59:59 EST",
+			}
+			// When
+			datetime, _ := cashAppTransaction.GetDatetime()
+			// Then
+			expectedDatetime := time.Date(2023, 12, 7, 4, 59, 59, 0, time.UTC)
+			assert.Equal(t, &expectedDatetime, datetime)
+		})
+
+		t.Run("should GetDatetime converted to UTC from EDT", func(t *testing.T) {
+			// Given
+			t.Setenv("TZ", "UTC")
+			cashAppTransaction := reports.CashAppTransaction{
+				Date: "2023-10-06 23:59:59 EDT",
+			}
+			// When
+			datetime, _ := cashAppTransaction.GetDatetime()
+			// Then
+			expectedDatetime := time.Date(2023, 10, 7, 3, 59, 59, 0, time.UTC)
+			assert.Equal(t, &expectedDatetime, datetime)
 		})
 	})
 }

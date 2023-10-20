@@ -13,5 +13,5 @@ type Transaction interface {
 	GetCounterparty() string
 	GetDescription() string
 	GetAmount() (float32, error)
-	GetDatetime() (time.Time, error)
+	GetDatetime() (*time.Time, error)
 }

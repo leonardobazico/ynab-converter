@@ -43,10 +43,15 @@ func (cashAppTransaction *CashAppTransaction) GetAmount() (float32, error) {
 	return float32(amount), nil
 }
 
-func (cashAppTransaction *CashAppTransaction) GetDatetime() (time.Time, error) {
-	datetime, err := time.Parse(time.DateTime+" MST", cashAppTransaction.Date)
+func (cashAppTransaction *CashAppTransaction) GetDatetime() (*time.Time, error) {
+	datetime, err := cashAppTransaction.dateToDatetime()
+	if err != nil {
+		return nil, fmt.Errorf("error getting UTC datetime: %w", err)
+	}
 
-	return datetime, fmt.Errorf("error parsing date: %w", err)
+	utcDatetime := datetime.UTC()
+
+	return &utcDatetime, nil
 }
 
 func NewCashAppTransaction(record []string) CashAppTransaction {
@@ -66,4 +71,39 @@ func NewCashAppTransaction(record []string) CashAppTransaction {
 		NameOfSenderReceiver: record[12],
 		Account:              record[13],
 	}
+}
+
+func (cashAppTransaction *CashAppTransaction) dateToDatetime() (*time.Time, error) {
+	easternDaylightTime := "EDT"
+	dateNormalized := strings.ReplaceAll(cashAppTransaction.Date, easternDaylightTime, "EST")
+	locationString, err := getLocationString(dateNormalized)
+	if err != nil {
+		return nil, fmt.Errorf("error getting location string: %w", err)
+	}
+
+	location, _ := time.LoadLocation(locationString)
+	datetime, err := time.ParseInLocation(time.DateTime+" MST", dateNormalized, location)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing date: %w", err)
+	}
+
+	isEasternDaylightTime := strings.Contains(cashAppTransaction.Date, easternDaylightTime)
+	if isEasternDaylightTime {
+		fixedEdtToEst := datetime.Add(-time.Hour)
+
+		return &fixedEdtToEst, nil
+	}
+
+	return &datetime, nil
+}
+
+func getLocationString(transactionDate string) (string, error) {
+	datetimeToExtractLocation, err := time.Parse(time.DateTime+" MST", transactionDate)
+	if err != nil {
+		return "", fmt.Errorf("error parsing date: %w", err)
+	}
+
+	timezoneAbbreviation := datetimeToExtractLocation.Location().String()
+
+	return timezoneAbbreviation, nil
 }

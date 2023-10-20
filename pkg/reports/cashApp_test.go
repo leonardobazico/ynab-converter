@@ -41,7 +41,7 @@ func TestCashAppReport(t *testing.T) {
 		}
 		expectedCashAppTransaction := reports.CashAppTransaction{
 			TransactionID:        "rmgsrz",
-			Date:                 "2023-10-06 19:56:39 EDT",
+			Date:                 "2023-10-06 23:59:59 EDT",
 			TransactionType:      "Cash Card Debit",
 			Currency:             "USD",
 			Amount:               "-$2.90",
