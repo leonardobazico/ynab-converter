@@ -110,7 +110,7 @@ func TestCashAppTransaction(t *testing.T) {
 			assert.Error(t, err)
 		})
 
-		t.Run("should GetDatetime converted to UTC", func(t *testing.T) {
+		t.Run("should GetDatetime", func(t *testing.T) {
 			// Given
 			t.Setenv("TZ", "UTC")
 			cashAppTransaction := reports.CashAppTransaction{
@@ -119,11 +119,13 @@ func TestCashAppTransaction(t *testing.T) {
 			// When
 			datetime, _ := cashAppTransaction.GetDatetime()
 			// Then
-			expectedDatetime := time.Date(2023, 12, 7, 4, 59, 59, 0, time.UTC)
+			estLocation, _ := time.LoadLocation("EST")
+			expectedDatetime := time.Date(2023, 12, 6, 23, 59, 59, 0, estLocation)
 			assert.Equal(t, &expectedDatetime, datetime)
+			assert.Equal(t, time.Date(2023, 12, 7, 4, 59, 59, 0, time.UTC), datetime.UTC())
 		})
 
-		t.Run("should GetDatetime converted to UTC from EDT", func(t *testing.T) {
+		t.Run("should get Eastern Daylight Time as EST offset by 1h", func(t *testing.T) {
 			// Given
 			t.Setenv("TZ", "UTC")
 			cashAppTransaction := reports.CashAppTransaction{
@@ -132,8 +134,10 @@ func TestCashAppTransaction(t *testing.T) {
 			// When
 			datetime, _ := cashAppTransaction.GetDatetime()
 			// Then
-			expectedDatetime := time.Date(2023, 10, 7, 3, 59, 59, 0, time.UTC)
+			estLocation, _ := time.LoadLocation("EST")
+			expectedDatetime := time.Date(2023, 10, 6, 22, 59, 59, 0, estLocation)
 			assert.Equal(t, &expectedDatetime, datetime)
+			assert.Equal(t, time.Date(2023, 10, 7, 3, 59, 59, 0, time.UTC), datetime.UTC())
 		})
 	})
 }

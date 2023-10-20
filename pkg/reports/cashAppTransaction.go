@@ -46,12 +46,10 @@ func (cashAppTransaction *CashAppTransaction) GetAmount() (float32, error) {
 func (cashAppTransaction *CashAppTransaction) GetDatetime() (*time.Time, error) {
 	datetime, err := cashAppTransaction.dateToDatetime()
 	if err != nil {
-		return nil, fmt.Errorf("error getting UTC datetime: %w", err)
+		return nil, fmt.Errorf("error getting datetime: %w", err)
 	}
 
-	utcDatetime := datetime.UTC()
-
-	return &utcDatetime, nil
+	return datetime, nil
 }
 
 func NewCashAppTransaction(record []string) CashAppTransaction {
