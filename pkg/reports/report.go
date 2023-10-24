@@ -9,6 +9,12 @@ type ReportImporter interface {
 	GetTransactions() []Transactioner
 }
 
+type TransactionToRecordTransformer interface {
+	GetHeader() []string
+	// GetRecords(transactions []Transactioner) ([][]string, error)
+	// GetRecordsWithHeader(transactions []Transactioner) ([][]string, error)
+}
+
 type Transactioner interface {
 	GetCounterparty() string
 	GetDescription() string
