@@ -1,4 +1,4 @@
-package reports
+package cashapp
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type CashAppTransaction struct {
+type Transaction struct {
 	TransactionID        string
 	Date                 string
 	TransactionType      string
@@ -24,15 +24,15 @@ type CashAppTransaction struct {
 	Account              string
 }
 
-func (cashAppTransaction *CashAppTransaction) GetCounterparty() string {
+func (cashAppTransaction *Transaction) GetCounterparty() string {
 	return cashAppTransaction.Notes
 }
 
-func (cashAppTransaction *CashAppTransaction) GetDescription() string {
+func (cashAppTransaction *Transaction) GetDescription() string {
 	return cashAppTransaction.Status
 }
 
-func (cashAppTransaction *CashAppTransaction) GetAmount() (float32, error) {
+func (cashAppTransaction *Transaction) GetAmount() (float32, error) {
 	amountWithoutDollarSign := strings.ReplaceAll(cashAppTransaction.Amount, "$", "")
 
 	amount, err := strconv.ParseFloat(amountWithoutDollarSign, 32)
@@ -43,7 +43,7 @@ func (cashAppTransaction *CashAppTransaction) GetAmount() (float32, error) {
 	return float32(amount), nil
 }
 
-func (cashAppTransaction *CashAppTransaction) GetDatetime() (*time.Time, error) {
+func (cashAppTransaction *Transaction) GetDatetime() (*time.Time, error) {
 	datetime, err := cashAppTransaction.dateToDatetime()
 	if err != nil {
 		return nil, fmt.Errorf("error getting datetime: %w", err)
@@ -52,8 +52,8 @@ func (cashAppTransaction *CashAppTransaction) GetDatetime() (*time.Time, error) 
 	return datetime, nil
 }
 
-func NewCashAppTransaction(record []string) CashAppTransaction {
-	return CashAppTransaction{
+func NewCashAppTransaction(record []string) Transaction {
+	return Transaction{
 		TransactionID:        record[0],
 		Date:                 record[1],
 		TransactionType:      record[2],
@@ -71,7 +71,7 @@ func NewCashAppTransaction(record []string) CashAppTransaction {
 	}
 }
 
-func (cashAppTransaction *CashAppTransaction) dateToDatetime() (*time.Time, error) {
+func (cashAppTransaction *Transaction) dateToDatetime() (*time.Time, error) {
 	easternDaylightTime := "EDT"
 	dateNormalized := strings.ReplaceAll(cashAppTransaction.Date, easternDaylightTime, "EST")
 	locationString, err := getLocationString(dateNormalized)

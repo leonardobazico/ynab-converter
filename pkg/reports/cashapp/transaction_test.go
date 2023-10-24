@@ -1,4 +1,4 @@
-package reports_test
+package cashapp_test
 
 import (
 	"testing"
@@ -7,11 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"cash2ynab/pkg/reports"
+	"cash2ynab/pkg/reports/cashapp"
 )
 
 //nolint:paralleltest
 func TestCashAppTransaction(t *testing.T) {
-	t.Run("should create a CashAppTransaction from a record", func(t *testing.T) {
+	t.Run("should create a cashapp.Transaction from a record", func(t *testing.T) {
 		// Given
 		record := []string{
 			"rmgsrz",
@@ -29,7 +30,7 @@ func TestCashAppTransaction(t *testing.T) {
 			"",
 			"Visa Debit 0987",
 		}
-		expectedCashAppTransaction := reports.CashAppTransaction{
+		expectedCashAppTransaction := cashapp.Transaction{
 			TransactionID:        "rmgsrz",
 			Date:                 "2023-10-06 23:59:59 EDT",
 			TransactionType:      "Cash Card Debit",
@@ -46,7 +47,7 @@ func TestCashAppTransaction(t *testing.T) {
 			Account:              "Visa Debit 0987",
 		}
 		// When
-		cashAppTransaction := reports.NewCashAppTransaction(record)
+		cashAppTransaction := cashapp.NewCashAppTransaction(record)
 		// Then
 		if cashAppTransaction != expectedCashAppTransaction {
 			t.Errorf("Expected cashAppTransaction to be %v. Got %v", expectedCashAppTransaction, cashAppTransaction)
@@ -72,10 +73,10 @@ func TestCashAppTransaction(t *testing.T) {
 			"Visa Debit 0987",
 		}
 		// When
-		cashAppTransaction := reports.NewCashAppTransaction(record)
+		cashAppTransaction := cashapp.NewCashAppTransaction(record)
 		_, implementsInterface := interface{}(&cashAppTransaction).(reports.Transactioner)
 		// Then
-		assert.True(t, implementsInterface, "CashAppTransaction does not implement Transactioner interface")
+		assert.True(t, implementsInterface, "cashapp.Transaction does not implement Transactioner interface")
 
 		t.Run("should GetCounterparty", func(t *testing.T) {
 			assert.Equal(t, "MTA*NYCT PAYGO", cashAppTransaction.GetCounterparty())
@@ -87,7 +88,7 @@ func TestCashAppTransaction(t *testing.T) {
 
 		t.Run("should return error when amount is not a float", func(t *testing.T) {
 			// Given
-			cashAppNotFloatTransaction := reports.CashAppTransaction{
+			cashAppNotFloatTransaction := cashapp.Transaction{
 				Amount: "not a float",
 			}
 			// When
@@ -103,7 +104,7 @@ func TestCashAppTransaction(t *testing.T) {
 
 		t.Run("should return error when datetime is not valid", func(t *testing.T) {
 			// Given
-			cashAppNotValidDateTransaction := reports.CashAppTransaction{
+			cashAppNotValidDateTransaction := cashapp.Transaction{
 				Date: "not a valid date",
 			}
 			// When
@@ -117,7 +118,7 @@ func TestCashAppTransaction(t *testing.T) {
 		t.Run("should not get error when datetime location is not valid", func(t *testing.T) {
 			t.Setenv("TZ", "UTC")
 			// Given
-			cashAppNotValidDateLocationTransaction := reports.CashAppTransaction{
+			cashAppNotValidDateLocationTransaction := cashapp.Transaction{
 				Date: "2023-10-06 23:59:59 XXX",
 			}
 			// When
@@ -130,7 +131,7 @@ func TestCashAppTransaction(t *testing.T) {
 		t.Run("should GetDatetime", func(t *testing.T) {
 			// Given
 			t.Setenv("TZ", "UTC")
-			cashAppTransaction := reports.CashAppTransaction{
+			cashAppTransaction := cashapp.Transaction{
 				Date: "2023-12-06 23:59:59 EST",
 			}
 			// When
@@ -145,7 +146,7 @@ func TestCashAppTransaction(t *testing.T) {
 		t.Run("should get Eastern Daylight Time as EST offset by 1h", func(t *testing.T) {
 			// Given
 			t.Setenv("TZ", "UTC")
-			cashAppTransaction := reports.CashAppTransaction{
+			cashAppTransaction := cashapp.Transaction{
 				Date: "2023-10-06 23:59:59 EDT",
 			}
 			// When

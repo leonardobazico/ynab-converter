@@ -1,4 +1,4 @@
-package reports_test
+package cashapp_test
 
 import (
 	"testing"
@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"cash2ynab/internal/file"
-	"cash2ynab/pkg/reports"
+	"cash2ynab/pkg/reports/cashapp"
 	utils_test "cash2ynab/tests/utils"
 )
 
@@ -17,18 +17,18 @@ func TestCashAppReport(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppReport := reports.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
+		cashAppReport := cashapp.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
 		// When
 		err := cashAppReport.ParseFileRecords("examples/does-not-exist.csv")
 		// Then
 		assert.Error(t, err)
 	})
 
-	t.Run("should parse file and get an array of CashAppTransaction", func(t *testing.T) {
+	t.Run("should parse file and get an array of cashapp.Transaction", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppReport := reports.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
+		cashAppReport := cashapp.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
 		// When
 		err := cashAppReport.ParseFileRecords("examples/cash_app_report_one_transaction.csv")
 		transactions := cashAppReport.GetTransactions()
@@ -39,7 +39,7 @@ func TestCashAppReport(t *testing.T) {
 		if len(transactions) != 1 {
 			t.Errorf("Expected transactions to have length 1. Got %v", len(transactions))
 		}
-		expectedCashAppTransaction := reports.CashAppTransaction{
+		expectedCashAppTransaction := cashapp.Transaction{
 			TransactionID:        "rmgsrz",
 			Date:                 "2023-10-06 23:59:59 EDT",
 			TransactionType:      "Cash Card Debit",

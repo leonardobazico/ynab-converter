@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"cash2ynab/pkg/reports"
+	"cash2ynab/pkg/reports/cashapp"
 )
 
 func TestYnabTransaction(t *testing.T) {
@@ -46,11 +47,11 @@ func TestYnabTransaction(t *testing.T) {
 		assert.Equal(t, expectedYnabTransaction, *ynabTransaction)
 	})
 
-	t.Run("should create a YnabTransaction from a CashAppTransaction", func(t *testing.T) {
+	t.Run("should create a YnabTransaction from a cashapp.Transaction", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppTransaction := reports.CashAppTransaction{
+		cashAppTransaction := cashapp.Transaction{
 			TransactionID:        "rmgsrz",
 			Date:                 "2023-10-06 23:59:59 EDT",
 			TransactionType:      "Cash Card Debit",
@@ -83,7 +84,7 @@ func TestYnabTransaction(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppNotValidDateTransaction := reports.CashAppTransaction{
+		cashAppNotValidDateTransaction := cashapp.Transaction{
 			Date: "not a valid date",
 		}
 		// When
@@ -96,7 +97,7 @@ func TestYnabTransaction(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppNotValidAmountTransaction := reports.CashAppTransaction{
+		cashAppNotValidAmountTransaction := cashapp.Transaction{
 			Date:   "2023-10-06 23:59:59 EDT",
 			Amount: "not a valid amount",
 		}
