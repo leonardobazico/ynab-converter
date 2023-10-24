@@ -6,11 +6,12 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"cash2ynab/internal/file"
+	"cash2ynab/pkg/reports"
 	"cash2ynab/pkg/reports/cashapp"
 	utils_test "cash2ynab/tests/utils"
 )
 
-func TestCashAppReport(t *testing.T) {
+func TestCashAppReportImporter(t *testing.T) {
 	t.Parallel()
 
 	t.Run("should return error when file does not exist", func(t *testing.T) {
@@ -55,8 +56,17 @@ func TestCashAppReport(t *testing.T) {
 			NameOfSenderReceiver: "",
 			Account:              "Visa Debit 0987",
 		}
-		if transactions[0] != expectedCashAppTransaction {
-			t.Errorf("Expected transactions[0] to be %v. Got %v", expectedCashAppTransaction, transactions[0])
-		}
+		assert.Equal(t, &expectedCashAppTransaction, transactions[0])
+	})
+
+	t.Run("should implement report.ReportImporter interface", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cashAppReport := cashapp.NewCashAppReport(file.NewCsvReader(utils_test.ExampleFilesFS))
+		// When
+		_, implementsInterface := interface{}(&cashAppReport).(reports.ReportImporter)
+		// Then
+		assert.True(t, implementsInterface, "CashAppReport does not implement ReportImporter interface")
 	})
 }

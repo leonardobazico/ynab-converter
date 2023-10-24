@@ -49,9 +49,7 @@ func TestCashAppTransaction(t *testing.T) {
 		// When
 		cashAppTransaction := cashapp.NewCashAppTransaction(record)
 		// Then
-		if cashAppTransaction != expectedCashAppTransaction {
-			t.Errorf("Expected cashAppTransaction to be %v. Got %v", expectedCashAppTransaction, cashAppTransaction)
-		}
+		assert.Equal(t, expectedCashAppTransaction, cashAppTransaction)
 	})
 
 	t.Run("should implement report.Transactioner interface", func(t *testing.T) {

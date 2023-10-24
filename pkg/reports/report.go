@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type Report interface {
+type ReportImporter interface {
 	ParseFileRecords(filePath string) error
 	GetTransactions() []Transactioner
 }

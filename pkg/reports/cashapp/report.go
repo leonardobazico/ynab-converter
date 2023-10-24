@@ -4,33 +4,35 @@ import (
 	"fmt"
 
 	"cash2ynab/internal/file"
+	"cash2ynab/pkg/reports"
 )
 
-type Report struct {
+type ReportImporter struct {
 	fileRecordsGetter file.RecordsGetter
-	transactions      []Transaction
+	transactions      []reports.Transactioner
 }
 
-func (cashAppReport *Report) ParseFileRecords(filePath string) error {
-	records, err := cashAppReport.fileRecordsGetter.GetRecordsFrom(filePath)
+func (cashApp *ReportImporter) ParseFileRecords(filePath string) error {
+	records, err := cashApp.fileRecordsGetter.GetRecordsFrom(filePath)
 	if err != nil {
 		return fmt.Errorf("fail to get records from file: %w", err)
 	}
 
 	for _, record := range records {
-		cashAppReport.transactions = append(
-			cashAppReport.transactions,
-			NewCashAppTransaction(record),
+		cashAppTransaction := NewCashAppTransaction(record)
+		cashApp.transactions = append(
+			cashApp.transactions,
+			&cashAppTransaction,
 		)
 	}
 
 	return nil
 }
 
-func (cashAppReport *Report) GetTransactions() []Transaction {
-	return cashAppReport.transactions
+func (cashApp *ReportImporter) GetTransactions() []reports.Transactioner {
+	return cashApp.transactions
 }
 
-func NewCashAppReport(fileRecordsGetter file.RecordsGetter) Report {
-	return Report{fileRecordsGetter: fileRecordsGetter, transactions: []Transaction{}}
+func NewCashAppReport(fileRecordsGetter file.RecordsGetter) ReportImporter {
+	return ReportImporter{fileRecordsGetter: fileRecordsGetter, transactions: []reports.Transactioner{}}
 }
