@@ -53,7 +53,7 @@ func TestCashAppTransaction(t *testing.T) {
 		}
 	})
 
-	t.Run("should implement report.Transaction interface", func(t *testing.T) {
+	t.Run("should implement report.Transactioner interface", func(t *testing.T) {
 		// Given
 		record := []string{
 			"rmgsrz",
@@ -73,9 +73,9 @@ func TestCashAppTransaction(t *testing.T) {
 		}
 		// When
 		cashAppTransaction := reports.NewCashAppTransaction(record)
+		_, implementsInterface := interface{}(&cashAppTransaction).(reports.Transactioner)
 		// Then
-		_, implementsInterface := interface{}(&cashAppTransaction).(reports.Transaction)
-		assert.True(t, implementsInterface, "CashAppTransaction does not implement Transaction interface")
+		assert.True(t, implementsInterface, "CashAppTransaction does not implement Transactioner interface")
 
 		t.Run("should GetCounterparty", func(t *testing.T) {
 			assert.Equal(t, "MTA*NYCT PAYGO", cashAppTransaction.GetCounterparty())
