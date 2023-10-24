@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"cash2ynab/pkg/reports"
+	"cash2ynab/pkg/reports/cashapp"
 	"cash2ynab/pkg/reports/ynab"
 )
 
@@ -77,5 +78,64 @@ func TestYnabRecordTransformer(t *testing.T) {
 			},
 			records,
 		)
+	})
+
+	t.Run("GetRecordsWithHeader", func(t *testing.T) {
+		t.Parallel()
+
+		t.Run("should return records with header as first item", func(t *testing.T) {
+			t.Parallel()
+
+			// Given
+			ynabRecordTransformer := ynab.NewYnabRecordTransformer()
+			// When
+			records, err := ynabRecordTransformer.GetRecordsWithHeader(
+				[]reports.Transactioner{
+					reports.Transaction{
+						Counterparty: "MTA*NYCT PAYGO",
+						Description:  "CARD CHARGED",
+						Amount:       -2.9,
+						Datetime:     time.Date(2023, 1, 2, 23, 59, 59, 0, time.UTC),
+					},
+				},
+			)
+			// Then
+			assert.NoError(t, err)
+			assert.Equal(
+				t,
+				[][]string{
+					{
+						"Date",
+						"Payee",
+						"Memo",
+						"Amount",
+					},
+					{
+						"01/02/2023",
+						"MTA*NYCT PAYGO",
+						"CARD CHARGED",
+						"-2.90",
+					},
+				},
+				records,
+			)
+		})
+
+		t.Run("should return an error if the transaction amount is invalid", func(t *testing.T) {
+			t.Parallel()
+
+			// Given
+			ynabRecordTransformer := ynab.NewYnabRecordTransformer()
+			// When
+			_, err := ynabRecordTransformer.GetRecordsWithHeader(
+				[]reports.Transactioner{
+					&cashapp.Transaction{
+						Date: "not a valid date",
+					},
+				},
+			)
+			// Then
+			assert.ErrorContains(t, err, "error creating ynab transaction")
+		})
 	})
 }

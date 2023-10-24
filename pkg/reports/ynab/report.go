@@ -14,7 +14,9 @@ func (ynab TransactionToRecordTransformer) GetHeader() []string {
 	return ynab.header
 }
 
-func (ynab TransactionToRecordTransformer) GetRecords(transactions []reports.Transactioner) ([][]string, error) {
+func (
+	ynab TransactionToRecordTransformer,
+) GetRecords(transactions []reports.Transactioner) ([][]string, error) {
 	records := [][]string{}
 	for _, transaction := range transactions {
 		ynabTransaction, err := NewYnabTransaction(transaction)
@@ -31,6 +33,17 @@ func (ynab TransactionToRecordTransformer) GetRecords(transactions []reports.Tra
 	}
 
 	return records, nil
+}
+
+func (
+	ynab TransactionToRecordTransformer,
+) GetRecordsWithHeader(transactions []reports.Transactioner) ([][]string, error) {
+	records, err := ynab.GetRecords(transactions)
+	if err != nil {
+		return nil, fmt.Errorf("error getting records: %w", err)
+	}
+
+	return append([][]string{ynab.GetHeader()}, records...), nil
 }
 
 func NewYnabRecordTransformer() TransactionToRecordTransformer {
