@@ -31,7 +31,7 @@ func TestCash2ynab(t *testing.T) {
 		// Then
 		assert.NoError(t, err)
 		assert.Equal(t,
-			"Date,Payee,Memo,Amount\n10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.9\n",
+			"Date,Payee,Memo,Amount\n10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n",
 			string(output))
 	})
 }

@@ -80,10 +80,7 @@ func (cashAppTransaction *CashAppTransaction) dateToDatetime() (*time.Time, erro
 	}
 
 	location, _ := time.LoadLocation(locationString)
-	datetime, err := time.ParseInLocation(time.DateTime+" MST", dateNormalized, location)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing date: %w", err)
-	}
+	datetime, _ := time.ParseInLocation(time.DateTime+" MST", dateNormalized, location)
 
 	isEasternDaylightTime := strings.Contains(cashAppTransaction.Date, easternDaylightTime)
 	if isEasternDaylightTime {
@@ -98,7 +95,7 @@ func (cashAppTransaction *CashAppTransaction) dateToDatetime() (*time.Time, erro
 func getLocationString(transactionDate string) (string, error) {
 	datetimeToExtractLocation, err := time.Parse(time.DateTime+" MST", transactionDate)
 	if err != nil {
-		return "", fmt.Errorf("error parsing date: %w", err)
+		return "", fmt.Errorf("error parsing datetime: %w", err)
 	}
 
 	timezoneAbbreviation := datetimeToExtractLocation.Location().String()

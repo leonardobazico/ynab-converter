@@ -107,9 +107,24 @@ func TestCashAppTransaction(t *testing.T) {
 				Date: "not a valid date",
 			}
 			// When
-			_, err := cashAppNotValidDateTransaction.GetDatetime()
+			datetime, err := cashAppNotValidDateTransaction.GetDatetime()
 			// Then
-			assert.Error(t, err)
+			assert.Nil(t, datetime)
+			assert.ErrorContains(t, err, "error parsing datetime")
+			assert.ErrorContains(t, err, "error getting location string")
+		})
+
+		t.Run("should not get error when datetime location is not valid", func(t *testing.T) {
+			t.Setenv("TZ", "UTC")
+			// Given
+			cashAppNotValidDateLocationTransaction := reports.CashAppTransaction{
+				Date: "2023-10-06 23:59:59 XXX",
+			}
+			// When
+			datetime, err := cashAppNotValidDateLocationTransaction.GetDatetime()
+			// Then
+			assert.NotNil(t, datetime)
+			assert.NoError(t, err)
 		})
 
 		t.Run("should GetDatetime", func(t *testing.T) {
