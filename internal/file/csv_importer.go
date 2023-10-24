@@ -7,11 +7,11 @@ import (
 	"log"
 )
 
-type CsvReader struct {
+type CsvImporter struct {
 	fileSystem fs.FS
 }
 
-func (reader *CsvReader) GetRecordsFrom(filePath string) ([][]string, error) {
+func (reader *CsvImporter) GetRecordsFrom(filePath string) ([][]string, error) {
 	csvFile, err := reader.fileSystem.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("fail to open file: %w", err)
@@ -36,6 +36,6 @@ func ignoreRecord(csvReader *csv.Reader) {
 	}
 }
 
-func NewCsvReader(fs fs.FS) *CsvReader {
-	return &CsvReader{fileSystem: fs}
+func NewCsvImporter(fs fs.FS) *CsvImporter {
+	return &CsvImporter{fileSystem: fs}
 }
