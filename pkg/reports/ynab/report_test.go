@@ -2,6 +2,7 @@ package ynab_test
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 
@@ -32,5 +33,49 @@ func TestYnabRecordTransformer(t *testing.T) {
 		header := ynabRecordTransformer.GetHeader()
 		// Then
 		assert.Equal(t, []string{"Date", "Payee", "Memo", "Amount"}, header)
+	})
+
+	t.Run("should return a record", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		ynabRecordTransformer := ynab.NewYnabRecordTransformer()
+		// When
+		records, err := ynabRecordTransformer.GetRecords(
+			[]reports.Transactioner{
+				reports.Transaction{
+					Counterparty: "MTA*NYCT PAYGO",
+					Description:  "CARD CHARGED",
+					Amount:       -2.9,
+					Datetime:     time.Date(2023, 1, 2, 23, 59, 59, 0, time.UTC),
+				},
+				reports.Transaction{
+					Counterparty: "Some business name",
+					Description:  "PAYMENT RECEIVED",
+					Amount:       10.0,
+					Datetime:     time.Date(2022, 12, 31, 23, 59, 59, 0, time.UTC),
+				},
+			},
+		)
+		// Then
+		assert.NoError(t, err)
+		assert.Equal(
+			t,
+			[][]string{
+				{
+					"01/02/2023",
+					"MTA*NYCT PAYGO",
+					"CARD CHARGED",
+					"-2.90",
+				},
+				{
+					"12/31/2022",
+					"Some business name",
+					"PAYMENT RECEIVED",
+					"10.00",
+				},
+			},
+			records,
+		)
 	})
 }
