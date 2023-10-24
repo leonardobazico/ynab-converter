@@ -76,7 +76,14 @@ func TestCashAppTransaction(t *testing.T) {
 		// Then
 		assert.True(t, implementsInterface, "cashapp.Transaction does not implement Transactioner interface")
 
-		t.Run("should GetCounterparty", func(t *testing.T) {
+		t.Run("should GetCounterparty from NameOfSenderReceiver by default", func(t *testing.T) {
+			cashAppBusinessTransaction := cashapp.Transaction{
+				NameOfSenderReceiver: "Some business name",
+			}
+			assert.Equal(t, "Some business name", cashAppBusinessTransaction.GetCounterparty())
+		})
+
+		t.Run("should GetCounterparty from Notes if NameOfSenderReceiver is empty", func(t *testing.T) {
 			assert.Equal(t, "MTA*NYCT PAYGO", cashAppTransaction.GetCounterparty())
 		})
 

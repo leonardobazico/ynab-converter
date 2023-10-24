@@ -25,7 +25,12 @@ type Transaction struct {
 }
 
 func (cashAppTransaction *Transaction) GetCounterparty() string {
-	return cashAppTransaction.Notes
+	counterpart := cashAppTransaction.NameOfSenderReceiver
+	if strings.TrimSpace(counterpart) == "" {
+		return cashAppTransaction.Notes
+	}
+
+	return counterpart
 }
 
 func (cashAppTransaction *Transaction) GetDescription() string {
