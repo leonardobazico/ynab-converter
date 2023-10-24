@@ -30,7 +30,7 @@ test-ci:
 	SKIP_INTEGRATION=true \
 		go test -cover -count=1  ./... -args -test.gocoverdir="$(PWD)/coverage/unit"
 	GOCOVERDIR=coverage/integration \
-		go test -count=1 ./tests/integration/...
+		go test -count=1 ./cmd/...
 	make coverage-files
 
 coverage-files:

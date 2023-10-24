@@ -22,6 +22,8 @@ func TestCash2ynab(t *testing.T) {
 	projectFolderPath := getProjectFolderPath(t)
 	cli := buildCli(t, projectFolderPath)
 	t.Run("should run cash2ynab command and get the output", func(t *testing.T) {
+		t.Parallel()
+
 		// Given
 		cmd := exec.Command(cli, "tests/utils/examples/cash_app_report_one_transaction.csv")
 		cmd.Env = append([]string{}, os.Environ()...)
@@ -34,6 +36,24 @@ func TestCash2ynab(t *testing.T) {
 			"Date,Payee,Memo,Amount\n10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n",
 			string(output))
 	})
+
+	t.Run("should fail when file does not exist", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cmd := exec.Command(cli, "tests/utils/examples/does-not-exist.csv")
+		cmd.Env = append([]string{}, os.Environ()...)
+		cmd.Dir = projectFolderPath
+		// When
+		output, err := cmd.CombinedOutput()
+		// Then
+		assert.Error(t, err)
+		assert.Contains(
+			t,
+			string(output),
+			"fail to open file: open tests/utils/examples/does-not-exist.csv: no such file or directory",
+		)
+	})
 }
 
 func getProjectFolderPath(tb testing.TB) string {
@@ -41,7 +61,7 @@ func getProjectFolderPath(tb testing.TB) string {
 
 	testFolder, _ := os.Getwd()
 	tb.Logf("Current test path: %s", testFolder)
-	projectFolderPath := filepath.Dir(filepath.Dir(filepath.Dir(testFolder)))
+	projectFolderPath := filepath.Dir(filepath.Dir(testFolder))
 	tb.Logf("Current project folder: %s", projectFolderPath)
 
 	return projectFolderPath

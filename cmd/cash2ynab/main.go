@@ -1,25 +1,34 @@
 package main
 
 import (
-	"fmt"
+	"encoding/csv"
 	"log"
-	"os/exec"
+	"os"
+
+	"cash2ynab/pkg/reports/cashapp"
+	"cash2ynab/pkg/reports/ynab"
 )
 
 func main() {
-	fileToConvert := "tests/utils/examples/ynab_report_one_transaction.csv"
-	cmd := exec.Command("cat", fileToConvert)
+	cashAppFile := os.Args[1]
 
-	output, err := cmd.CombinedOutput()
-	outputString := string(output)
+	cashAppImporter := cashapp.NewCashAppReportCsvImporter(os.DirFS("."))
+	err := cashAppImporter.ParseFileRecords(cashAppFile)
 	if err != nil {
-		log.Fatalf(
-			"Error running cat command, %v\n"+
-				"output, %s\n",
-			err,
-			outputString,
-		)
+		log.Fatalf("Error parsing file records: %v", err)
 	}
 
-	fmt.Print(outputString)
+	transactions := cashAppImporter.GetTransactions()
+
+	ynabRecordTransformer := ynab.NewYnabRecordTransformer()
+	records, err := ynabRecordTransformer.GetRecordsWithHeader(transactions)
+	if err != nil {
+		log.Fatalf("Error getting YNAB records: %v", err)
+	}
+
+	writer := csv.NewWriter(os.Stdout)
+	err = writer.WriteAll(records)
+	if err != nil {
+		log.Fatalf("Error writing records: %v", err)
+	}
 }
