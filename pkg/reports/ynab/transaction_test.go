@@ -1,4 +1,4 @@
-package reports_test
+package ynab_test
 
 import (
 	"testing"
@@ -8,6 +8,7 @@ import (
 
 	"cash2ynab/pkg/reports"
 	"cash2ynab/pkg/reports/cashapp"
+	"cash2ynab/pkg/reports/ynab"
 )
 
 func TestYnabTransaction(t *testing.T) {
@@ -24,7 +25,7 @@ func TestYnabTransaction(t *testing.T) {
 
 	// ```
 
-	t.Run("should create a YnabTransaction from a Transaction", func(t *testing.T) {
+	t.Run("should create a ynab.Transaction from a Transaction", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
@@ -34,14 +35,14 @@ func TestYnabTransaction(t *testing.T) {
 			Amount:       -2.9,
 			Datetime:     time.Date(2023, 10, 6, 23, 59, 59, 0, time.UTC),
 		}
-		expectedYnabTransaction := reports.YnabTransaction{
+		expectedYnabTransaction := ynab.Transaction{
 			Date:   "10/06/2023",
 			Payee:  "MTA*NYCT PAYGO",
 			Memo:   "CARD CHARGED",
 			Amount: "-2.90",
 		}
 		// When
-		ynabTransaction, err := reports.NewYnabTransaction(transaction)
+		ynabTransaction, err := ynab.NewYnabTransaction(transaction)
 		// Then
 		assert.NoError(t, err)
 		assert.Equal(t, expectedYnabTransaction, *ynabTransaction)
@@ -67,14 +68,14 @@ func TestYnabTransaction(t *testing.T) {
 			NameOfSenderReceiver: "",
 			Account:              "Visa Debit 0987",
 		}
-		expectedYnabTransaction := reports.YnabTransaction{
+		expectedYnabTransaction := ynab.Transaction{
 			Date:   "10/06/2023",
 			Payee:  "MTA*NYCT PAYGO",
 			Memo:   "CARD CHARGED",
 			Amount: "-2.90",
 		}
 		// When
-		ynabTransaction, err := reports.NewYnabTransaction(&cashAppTransaction)
+		ynabTransaction, err := ynab.NewYnabTransaction(&cashAppTransaction)
 		// Then
 		assert.NoError(t, err)
 		assert.Equal(t, expectedYnabTransaction, *ynabTransaction)
@@ -88,7 +89,7 @@ func TestYnabTransaction(t *testing.T) {
 			Date: "not a valid date",
 		}
 		// When
-		_, err := reports.NewYnabTransaction(&cashAppNotValidDateTransaction)
+		_, err := ynab.NewYnabTransaction(&cashAppNotValidDateTransaction)
 		// Then
 		assert.ErrorContains(t, err, "error getting datetime")
 	})
@@ -102,7 +103,7 @@ func TestYnabTransaction(t *testing.T) {
 			Amount: "not a valid amount",
 		}
 		// When
-		_, err := reports.NewYnabTransaction(&cashAppNotValidAmountTransaction)
+		_, err := ynab.NewYnabTransaction(&cashAppNotValidAmountTransaction)
 		// Then
 		assert.ErrorContains(t, err, "error getting amount")
 	})
