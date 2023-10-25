@@ -25,7 +25,7 @@ func TestCash2ynab(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cmd := exec.Command(cli, "tests/utils/examples/cash_app_report_one_transaction.csv")
+		cmd := exec.Command(cli, "tests/utils/examples/cash_app_report_sample.csv")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
@@ -33,7 +33,9 @@ func TestCash2ynab(t *testing.T) {
 		// Then
 		assert.NoError(t, err)
 		assert.Equal(t,
-			"Date,Payee,Memo,Amount\n10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n",
+			"Date,Payee,Memo,Amount\n"+
+				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
+				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
 			string(output))
 	})
 

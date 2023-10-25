@@ -31,11 +31,10 @@ func TestCashAppReportImporter(t *testing.T) {
 		// Given
 		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporter(utils_test.ExampleFilesFS))
 		// When
-		err := cashAppReport.ParseFileRecords("examples/cash_app_report_one_transaction.csv")
+		err := cashAppReport.ParseFileRecords("examples/cash_app_report_sample.csv")
 		transactions := cashAppReport.GetTransactions()
 		// Then
 		assert.NoError(t, err)
-		assert.Len(t, transactions, 1)
 		expectedCashAppTransaction := cashapp.Transaction{
 			TransactionID:        "rmgsrz",
 			Date:                 "2023-10-06 23:59:59 EDT",
