@@ -56,6 +56,64 @@ func TestCash2ynab(t *testing.T) {
 			"fail to open file: open tests/utils/examples/does-not-exist.csv: no such file or directory",
 		)
 	})
+
+	t.Run("should handle absolute path", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cmd := exec.Command(cli, projectFolderPath+"/tests/utils/examples/cash_app_report_sample.csv")
+		cmd.Env = append([]string{}, os.Environ()...)
+		cmd.Dir = projectFolderPath
+		// When
+		output, err := cmd.CombinedOutput()
+		// Then
+		assert.NoError(t, err)
+		assert.Equal(t,
+			"Date,Payee,Memo,Amount\n"+
+				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
+				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
+			string(output))
+	})
+
+	t.Run("should handle relative path", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cmd := exec.Command(cli, "./tests/utils/examples/cash_app_report_sample.csv")
+		cmd.Env = append([]string{}, os.Environ()...)
+		cmd.Dir = projectFolderPath
+		// When
+		output, err := cmd.CombinedOutput()
+		// Then
+		assert.NoError(t, err)
+		assert.Equal(t,
+			"Date,Payee,Memo,Amount\n"+
+				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
+				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
+			string(output))
+	})
+
+	t.Run("should handle level up relative path", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cmd := exec.Command(
+			cli,
+			"../"+filepath.Base(projectFolderPath)+
+				"/tests/utils/examples/cash_app_report_sample.csv",
+		)
+		cmd.Env = append([]string{}, os.Environ()...)
+		cmd.Dir = projectFolderPath
+		// When
+		output, err := cmd.CombinedOutput()
+		// Then
+		assert.NoError(t, err)
+		assert.Equal(t,
+			"Date,Payee,Memo,Amount\n"+
+				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
+				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
+			string(output))
+	})
 }
 
 func getProjectFolderPath(tb testing.TB) string {

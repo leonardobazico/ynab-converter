@@ -2,7 +2,6 @@ package cashapp
 
 import (
 	"fmt"
-	"io/fs"
 
 	"cash2ynab/internal/file"
 	"cash2ynab/pkg/reports"
@@ -38,6 +37,6 @@ func NewCashAppReport(fileRecordsGetter file.RecordsGetter) ReportImporter {
 	return ReportImporter{fileRecordsGetter: fileRecordsGetter, transactions: []reports.Transactioner{}}
 }
 
-func NewCashAppReportCsvImporter(fs fs.FS) ReportImporter {
-	return NewCashAppReport(file.NewCsvImporter(fs))
+func NewCashAppReportCsvImporter() ReportImporter {
+	return NewCashAppReport(file.NewCsvImporter())
 }

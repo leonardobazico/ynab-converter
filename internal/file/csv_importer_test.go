@@ -17,7 +17,7 @@ func TestCsvImporter(t *testing.T) {
 
 		// Given
 		filePath := "examples/does-not-exist.csv"
-		csvReader := file.NewCsvImporter(utils_test.ExampleFilesFS)
+		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
 		// When
 		_, err := csvReader.GetRecordsFrom(filePath)
 		// Then
@@ -34,7 +34,7 @@ func TestCsvImporter(t *testing.T) {
 
 		// Given
 		filePath := "examples/not-a-csv.txt"
-		csvReader := file.NewCsvImporter(utils_test.ExampleFilesFS)
+		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
 		// When
 		output, err := csvReader.GetRecordsFrom(filePath)
 		// Then
@@ -47,7 +47,7 @@ func TestCsvImporter(t *testing.T) {
 
 		// Given
 		filePath := "examples/cash_app_report.csv"
-		csvReader := file.NewCsvImporter(utils_test.ExampleFilesFS)
+		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
 		// When
 		_, err := csvReader.GetRecordsFrom(filePath)
 		// Then
@@ -59,7 +59,7 @@ func TestCsvImporter(t *testing.T) {
 
 		// Given
 		filePath := "examples/empty.csv"
-		csvReader := file.NewCsvImporter(utils_test.ExampleFilesFS)
+		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
 		// When
 		records, err := csvReader.GetRecordsFrom(filePath)
 		// Then
@@ -72,7 +72,7 @@ func TestCsvImporter(t *testing.T) {
 
 		// Given
 		filePath := "examples/just_title.csv"
-		csvReader := file.NewCsvImporter(utils_test.ExampleFilesFS)
+		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
 		// When
 		records, err := csvReader.GetRecordsFrom(filePath)
 		// Then
@@ -85,7 +85,7 @@ func TestCsvImporter(t *testing.T) {
 
 		// Given
 		filePath := "examples/cash_app_report.csv"
-		csvReader := file.NewCsvImporter(utils_test.ExampleFilesFS)
+		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
 		// When
 		records, err := csvReader.GetRecordsFrom(filePath)
 		// Then

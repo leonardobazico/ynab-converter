@@ -8,11 +8,11 @@ import (
 )
 
 type CsvImporter struct {
-	fileSystem fs.FS
+	opener Opener
 }
 
 func (reader *CsvImporter) GetRecordsFrom(filePath string) ([][]string, error) {
-	csvFile, err := reader.fileSystem.Open(filePath)
+	csvFile, err := reader.opener.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("fail to open file: %w", err)
 	}
@@ -36,6 +36,10 @@ func ignoreRecord(csvReader *csv.Reader) {
 	}
 }
 
-func NewCsvImporter(fs fs.FS) *CsvImporter {
-	return &CsvImporter{fileSystem: fs}
+func NewCsvImporterFromFileSytem(fs fs.FS) *CsvImporter {
+	return &CsvImporter{opener: NewFileSytemOpener(fs)}
+}
+
+func NewCsvImporter() *CsvImporter {
+	return &CsvImporter{opener: NewOsOpener()}
 }

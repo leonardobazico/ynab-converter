@@ -12,7 +12,7 @@ import (
 func main() {
 	cashAppFile := os.Args[1]
 
-	cashAppImporter := cashapp.NewCashAppReportCsvImporter(os.DirFS("."))
+	cashAppImporter := cashapp.NewCashAppReportCsvImporter()
 	err := cashAppImporter.ParseFileRecords(cashAppFile)
 	if err != nil {
 		log.Fatalf("Error parsing file records: %v", err)

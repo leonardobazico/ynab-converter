@@ -18,7 +18,7 @@ func TestCashAppReportImporter(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporter(utils_test.ExampleFilesFS))
+		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS))
 		// When
 		err := cashAppReport.ParseFileRecords("examples/does-not-exist.csv")
 		// Then
@@ -29,7 +29,7 @@ func TestCashAppReportImporter(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporter(utils_test.ExampleFilesFS))
+		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS))
 		// When
 		err := cashAppReport.ParseFileRecords("examples/cash_app_report_sample.csv")
 		transactions := cashAppReport.GetTransactions()
@@ -58,7 +58,7 @@ func TestCashAppReportImporter(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporter(utils_test.ExampleFilesFS))
+		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS))
 		// When
 		_, implementsInterface := interface{}(&cashAppReport).(reports.ReportImporter)
 		// Then
