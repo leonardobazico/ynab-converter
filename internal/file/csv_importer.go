@@ -36,8 +36,8 @@ func ignoreRecord(csvReader *csv.Reader) {
 	}
 }
 
-func NewCsvImporterFromFileSytem(fs fs.FS) *CsvImporter {
-	return &CsvImporter{opener: NewFileSytemOpener(fs)}
+func NewCsvImporterFromFileSytem(fileSystem fs.FS) *CsvImporter {
+	return &CsvImporter{opener: NewFileSytemOpener(fileSystem)}
 }
 
 func NewCsvImporter() *CsvImporter {

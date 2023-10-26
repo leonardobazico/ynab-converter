@@ -20,10 +20,10 @@ func TestOpener(t *testing.T) {
 		filePath := "examples/cash_app_report.csv"
 		opener := file.NewFileSytemOpener(utils_test.ExampleFilesFS)
 		// When
-		file, err := opener.Open(filePath)
+		fileOpened, err := opener.Open(filePath)
 		// Then
 		assert.NoError(t, err)
-		err = file.Close()
+		err = fileOpened.Close()
 		assert.NoError(t, err)
 	})
 
@@ -34,10 +34,10 @@ func TestOpener(t *testing.T) {
 		filePath := "opener_test.go"
 		opener := file.NewOsOpener()
 		// When
-		file, err := opener.Open(filePath)
+		fileOpened, err := opener.Open(filePath)
 		// Then
 		assert.NoError(t, err)
-		err = file.Close()
+		err = fileOpened.Close()
 		assert.NoError(t, err)
 	})
 
@@ -49,10 +49,10 @@ func TestOpener(t *testing.T) {
 		filePath := testFolder + "/opener_test.go"
 		opener := file.NewOsOpener()
 		// When
-		file, err := opener.Open(filePath)
+		fileOpened, err := opener.Open(filePath)
 		// Then
 		assert.NoError(t, err)
-		err = file.Close()
+		err = fileOpened.Close()
 		assert.NoError(t, err)
 	})
 
@@ -63,9 +63,9 @@ func TestOpener(t *testing.T) {
 		filePath := "does-not-exist.csv"
 		opener := file.NewOsOpener()
 		// When
-		file, err := opener.Open(filePath)
+		fileOpened, err := opener.Open(filePath)
 		// Then
 		assert.Error(t, err)
-		assert.Nil(t, file)
+		assert.Nil(t, fileOpened)
 	})
 }

@@ -41,6 +41,9 @@ jobs:
       - name: Security check
         run: make security-check
 
+      - name: Critic
+        run: make critic
+
       - name: Test
         run: make test-ci
 

@@ -10,7 +10,7 @@ import (
 	"cash2ynab/pkg/reports/cashapp"
 )
 
-//nolint:paralleltest
+//nolint:paralleltest // t.Setenv isn't compatible with parallel tests
 func TestCashAppTransaction(t *testing.T) {
 	t.Run("should create a cashapp.Transaction from a record", func(t *testing.T) {
 		// Given

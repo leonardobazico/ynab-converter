@@ -3,6 +3,8 @@ GOTEST=gotestsum --format=testname
 install-ci-dependencies:
 	go version
 	go install github.com/securego/gosec/v2/cmd/gosec@latest
+	go install github.com/go-critic/go-critic/cmd/gocritic@latest
+
 
 setup-dev: install-ci-dependencies
 	go install gotest.tools/gotestsum@latest
@@ -17,7 +19,10 @@ lint-fix:
 security-check:
 	gosec ./...
 
-test: lint security-check
+critic:
+	gocritic check -enableAll ./...
+
+test: lint security-check critic
 	$(GOTEST) -- -count=1 ./...
 
 test-watch:
