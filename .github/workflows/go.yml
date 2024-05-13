@@ -34,7 +34,7 @@ jobs:
         run: make install-ci-dependencies
 
       - name: Lint
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@v6
         with:
           version: v1.54
 
