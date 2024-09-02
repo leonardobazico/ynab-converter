@@ -17,6 +17,8 @@ function restoreStashedIfAny {
 trap restoreStashedIfAny EXIT
 trap restoreStashedIfAny ERR
 
+go mod tidy
+
 make test
 
 make prettier
