@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"cash2ynab/pkg/reports"
 	"cash2ynab/pkg/reports/cashapp"
@@ -99,12 +100,12 @@ func TestCashAppTransaction(t *testing.T) {
 			// When
 			_, err := cashAppNotFloatTransaction.GetAmount()
 			// Then
-			assert.Error(t, err)
+			require.Error(t, err)
 		})
 
 		t.Run("should GetAmount", func(t *testing.T) {
 			amount, _ := cashAppTransaction.GetAmount()
-			assert.Equal(t, float32(-2.90), amount)
+			assert.InEpsilon(t, float32(-2.90), amount, 0.0001)
 		})
 
 		t.Run("should return error when datetime is not valid", func(t *testing.T) {
@@ -116,7 +117,7 @@ func TestCashAppTransaction(t *testing.T) {
 			datetime, err := cashAppNotValidDateTransaction.GetDatetime()
 			// Then
 			assert.Nil(t, datetime)
-			assert.ErrorContains(t, err, "error parsing datetime")
+			require.ErrorContains(t, err, "error parsing datetime")
 			assert.ErrorContains(t, err, "error getting location string")
 		})
 
@@ -130,7 +131,7 @@ func TestCashAppTransaction(t *testing.T) {
 			datetime, err := cashAppNotValidDateLocationTransaction.GetDatetime()
 			// Then
 			assert.NotNil(t, datetime)
-			assert.NoError(t, err)
+			require.NoError(t, err)
 		})
 
 		t.Run("should GetDatetime", func(t *testing.T) {

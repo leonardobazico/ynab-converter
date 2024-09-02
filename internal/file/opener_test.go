@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"cash2ynab/internal/file"
 	utils_test "cash2ynab/tests/utils"
@@ -22,9 +23,9 @@ func TestOpener(t *testing.T) {
 		// When
 		fileOpened, err := opener.Open(filePath)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		err = fileOpened.Close()
-		assert.NoError(t, err)
+		require.NoError(t, err)
 	})
 
 	t.Run("should open file using os.OpenFile when no file system is given", func(t *testing.T) {
@@ -36,9 +37,9 @@ func TestOpener(t *testing.T) {
 		// When
 		fileOpened, err := opener.Open(filePath)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		err = fileOpened.Close()
-		assert.NoError(t, err)
+		require.NoError(t, err)
 	})
 
 	t.Run("should open file given an absolute path", func(t *testing.T) {
@@ -51,9 +52,9 @@ func TestOpener(t *testing.T) {
 		// When
 		fileOpened, err := opener.Open(filePath)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		err = fileOpened.Close()
-		assert.NoError(t, err)
+		require.NoError(t, err)
 	})
 
 	t.Run("should fail when file does not exist", func(t *testing.T) {
@@ -65,7 +66,7 @@ func TestOpener(t *testing.T) {
 		// When
 		fileOpened, err := opener.Open(filePath)
 		// Then
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.Nil(t, fileOpened)
 	})
 }

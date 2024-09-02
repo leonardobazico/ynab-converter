@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"cash2ynab/pkg/reports"
 	"cash2ynab/pkg/reports/cashapp"
@@ -59,7 +60,7 @@ func TestYnabRecordTransformer(t *testing.T) {
 			},
 		)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(
 			t,
 			[][]string{
@@ -100,7 +101,7 @@ func TestYnabRecordTransformer(t *testing.T) {
 				},
 			)
 			// Then
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.Equal(
 				t,
 				[][]string{

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"cash2ynab/internal/file"
 	utils_test "cash2ynab/tests/utils"
@@ -51,7 +52,7 @@ func TestCsvImporter(t *testing.T) {
 		// When
 		_, err := csvReader.GetRecordsFrom(filePath)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 	})
 
 	t.Run("should not return error when file exists and is empty", func(t *testing.T) {
@@ -63,8 +64,8 @@ func TestCsvImporter(t *testing.T) {
 		// When
 		records, err := csvReader.GetRecordsFrom(filePath)
 		// Then
-		assert.NoError(t, err)
-		assert.Len(t, records, 0)
+		require.NoError(t, err)
+		assert.Empty(t, records)
 	})
 
 	t.Run("should ignore title from records", func(t *testing.T) {
@@ -76,8 +77,8 @@ func TestCsvImporter(t *testing.T) {
 		// When
 		records, err := csvReader.GetRecordsFrom(filePath)
 		// Then
-		assert.NoError(t, err)
-		assert.Len(t, records, 0)
+		require.NoError(t, err)
+		assert.Empty(t, records)
 	})
 
 	t.Run("should return matrix of strings when file exists and is not empty", func(t *testing.T) {
@@ -89,7 +90,7 @@ func TestCsvImporter(t *testing.T) {
 		// When
 		records, err := csvReader.GetRecordsFrom(filePath)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotEmpty(t, records)
 	})
 }

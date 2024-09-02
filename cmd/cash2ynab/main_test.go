@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCash2ynab(t *testing.T) {
@@ -31,7 +32,7 @@ func TestCash2ynab(t *testing.T) {
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t,
 			"Date,Payee,Memo,Amount\n"+
 				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
@@ -49,7 +50,7 @@ func TestCash2ynab(t *testing.T) {
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.Contains(
 			t,
 			string(output),
@@ -67,7 +68,7 @@ func TestCash2ynab(t *testing.T) {
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t,
 			"Date,Payee,Memo,Amount\n"+
 				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
@@ -85,7 +86,7 @@ func TestCash2ynab(t *testing.T) {
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t,
 			"Date,Payee,Memo,Amount\n"+
 				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
@@ -107,7 +108,7 @@ func TestCash2ynab(t *testing.T) {
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t,
 			"Date,Payee,Memo,Amount\n"+
 				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+

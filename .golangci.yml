@@ -4,7 +4,6 @@ linters:
   disable:
     - forbidigo
     - gofumpt
-    - ifshort
     - importas
     - tparallel
     - wsl

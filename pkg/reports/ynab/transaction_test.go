@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"cash2ynab/pkg/reports"
 	"cash2ynab/pkg/reports/cashapp"
@@ -44,7 +45,7 @@ func TestYnabTransaction(t *testing.T) {
 		// When
 		ynabTransaction, err := ynab.NewYnabTransaction(transaction)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, expectedYnabTransaction, *ynabTransaction)
 	})
 
@@ -77,7 +78,7 @@ func TestYnabTransaction(t *testing.T) {
 		// When
 		ynabTransaction, err := ynab.NewYnabTransaction(&cashAppTransaction)
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, expectedYnabTransaction, *ynabTransaction)
 	})
 

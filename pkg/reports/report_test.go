@@ -46,7 +46,7 @@ func TestTransaction(t *testing.T) {
 			// When
 			amount, _ := transaction.GetAmount()
 			// Then
-			assert.Equal(t, float32(-2.9), amount)
+			assert.InEpsilon(t, float32(-2.9), amount, 0.0001)
 		})
 
 		t.Run("should return the datetime", func(t *testing.T) {

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"cash2ynab/internal/file"
 	"cash2ynab/pkg/reports"
@@ -22,7 +23,7 @@ func TestCashAppReportImporter(t *testing.T) {
 		// When
 		err := cashAppReport.ParseFileRecords("examples/does-not-exist.csv")
 		// Then
-		assert.Error(t, err)
+		require.Error(t, err)
 	})
 
 	t.Run("should parse file and get an array of cashapp.Transaction", func(t *testing.T) {
@@ -34,7 +35,7 @@ func TestCashAppReportImporter(t *testing.T) {
 		err := cashAppReport.ParseFileRecords("examples/cash_app_report_sample.csv")
 		transactions := cashAppReport.GetTransactions()
 		// Then
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		expectedCashAppTransaction := cashapp.Transaction{
 			TransactionID:        "rmgsrz",
 			Date:                 "2023-10-06 23:59:59 EDT",
