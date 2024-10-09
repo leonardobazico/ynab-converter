@@ -1,7 +1,7 @@
 # CLI to convert files into You Need a Budget (YNAB) format
 
-[![cashapp-ynab-converter-pipeline](https://github.com/leonardobazico/cashapp-ynab-converter/actions/workflows/go.yml/badge.svg)](https://github.com/leonardobazico/cashapp-ynab-converter/actions/workflows/go.yml)
-![coverage](https://raw.githubusercontent.com/leonardobazico/cashapp-ynab-converter/badges/.badges/main/coverage.svg)
+[![ynab-converter-pipeline](https://github.com/leonardobazico/ynab-converter/actions/workflows/go.yml/badge.svg)](https://github.com/leonardobazico/ynab-converter/actions/workflows/go.yml)
+![coverage](https://raw.githubusercontent.com/leonardobazico/ynab-converter/badges/.badges/main/coverage.svg)
 
 This solution is based on the [Formatting a CSV File](https://support.ynab.com/en_us/formatting-a-csv-file-an-overview-BJvczkuRq)
 
