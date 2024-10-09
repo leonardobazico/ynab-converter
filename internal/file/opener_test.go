@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"cash2ynab/internal/file"
-	utils_test "cash2ynab/tests/utils"
+	"ynabconverter/internal/file"
+	utils_test "ynabconverter/tests/utils"
 )
 
 func TestOpener(t *testing.T) {

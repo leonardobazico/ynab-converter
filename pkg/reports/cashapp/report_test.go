@@ -6,10 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"cash2ynab/internal/file"
-	"cash2ynab/pkg/reports"
-	"cash2ynab/pkg/reports/cashapp"
-	utils_test "cash2ynab/tests/utils"
+	"ynabconverter/internal/file"
+	"ynabconverter/pkg/reports"
+	"ynabconverter/pkg/reports/cashapp"
+	utils_test "ynabconverter/tests/utils"
 )
 
 func TestCashAppReportImporter(t *testing.T) {

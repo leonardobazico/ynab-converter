@@ -1,5 +1,5 @@
 // this is a integration test
-// which run the cash2ynab cli command and check the output
+// which run the ynabconverter cli command and check the output
 
 package main_test
 
@@ -22,7 +22,7 @@ func TestCash2ynab(t *testing.T) {
 
 	projectFolderPath := getProjectFolderPath(t)
 	cli := buildCli(t, projectFolderPath)
-	t.Run("should run cash2ynab command and get the output", func(t *testing.T) {
+	t.Run("should run ynabconverter command and get the output", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
@@ -131,12 +131,12 @@ func getProjectFolderPath(tb testing.TB) string {
 func buildCli(tb testing.TB, projectFolderPath string) string {
 	tb.Helper()
 
-	cliPath := "bin/cash2ynab-test"
+	cliPath := "bin/ynabconverter-test"
 	var cmd *exec.Cmd
 	if _, present := os.LookupEnv("GOCOVERDIR"); present {
-		cmd = exec.Command("go", "build", "-cover", "-o", cliPath, "cmd/cash2ynab/main.go")
+		cmd = exec.Command("go", "build", "-cover", "-o", cliPath, "cmd/ynabconverter/main.go")
 	} else {
-		cmd = exec.Command("go", "build", "-o", cliPath, "cmd/cash2ynab/main.go")
+		cmd = exec.Command("go", "build", "-o", cliPath, "cmd/ynabconverter/main.go")
 	}
 	cmd.Dir = projectFolderPath
 	err := cmd.Run()

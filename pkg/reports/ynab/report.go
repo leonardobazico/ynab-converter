@@ -3,7 +3,7 @@ package ynab
 import (
 	"fmt"
 
-	"cash2ynab/pkg/reports"
+	"ynabconverter/pkg/reports"
 )
 
 type TransactionToRecordTransformer struct {

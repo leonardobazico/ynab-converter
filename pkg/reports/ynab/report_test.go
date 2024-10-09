@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"cash2ynab/pkg/reports"
-	"cash2ynab/pkg/reports/cashapp"
-	"cash2ynab/pkg/reports/ynab"
+	"ynabconverter/pkg/reports"
+	"ynabconverter/pkg/reports/cashapp"
+	"ynabconverter/pkg/reports/ynab"
 )
 
 func TestYnabRecordTransformer(t *testing.T) {

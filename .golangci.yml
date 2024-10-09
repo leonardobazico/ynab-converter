@@ -26,12 +26,12 @@ linters:
 
 linters-settings:
   goimports:
-    local-prefixes: cash2ynab/
+    local-prefixes: ynabconverter/
   gci:
     sections:
       - standard
       - default
-      - prefix(cash2ynab)
+      - prefix(ynabconverter)
 
 issues:
   exclude-rules:

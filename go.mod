@@ -1,4 +1,4 @@
-module cash2ynab
+module ynabconverter
 
 go 1.23
 

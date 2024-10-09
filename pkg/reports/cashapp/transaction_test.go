@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"cash2ynab/pkg/reports"
-	"cash2ynab/pkg/reports/cashapp"
+	"ynabconverter/pkg/reports"
+	"ynabconverter/pkg/reports/cashapp"
 )
 
 //nolint:paralleltest // t.Setenv isn't compatible with parallel tests

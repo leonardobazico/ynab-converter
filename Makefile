@@ -40,7 +40,7 @@ test-ci:
 
 coverage-files:
 	go tool covdata textfmt -i=./coverage/unit,./coverage/integration -o coverage/profile.out
-	sed -i'.bak' "s#$(PWD)#cash2ynab#g" coverage/profile.out
+	sed -i'.bak' "s#$(PWD)#ynabconverter#g" coverage/profile.out
 	go tool cover -func coverage/profile.out
 	go tool cover -html=coverage/profile.out -o=coverage/profile.html
 

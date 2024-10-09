@@ -31,10 +31,10 @@ Date,Payee,Memo,Amount
 
 ## Usage
 
-This cli tool is called cash2ynab. It takes one argument, the input file name, and it outputs to stdout.
+This cli tool is called ynabconverter. It takes one argument, the input file name, and it outputs to stdout.
 
 ```bash
-cash2ynab input.csv > output.csv
+ynabconverter input.csv > output.csv
 ```
 
 ## Tech stack

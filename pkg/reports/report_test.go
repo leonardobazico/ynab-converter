@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"cash2ynab/pkg/reports"
+	"ynabconverter/pkg/reports"
 )
 
 func TestTransaction(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"cash2ynab/pkg/reports/cashapp"
-	"cash2ynab/pkg/reports/ynab"
+	"ynabconverter/pkg/reports/cashapp"
+	"ynabconverter/pkg/reports/ynab"
 )
 
 func main() {

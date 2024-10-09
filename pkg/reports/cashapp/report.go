@@ -3,8 +3,8 @@ package cashapp
 import (
 	"fmt"
 
-	"cash2ynab/internal/file"
-	"cash2ynab/pkg/reports"
+	"ynabconverter/internal/file"
+	"ynabconverter/pkg/reports"
 )
 
 type ReportImporter struct {
