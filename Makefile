@@ -28,6 +28,9 @@ test: lint security-check critic
 test-watch:
 	$(GOTEST) --watch ./...
 
+test-integration:
+	$(GOTEST) -- -count=1 ./cmd/...
+
 test-ci:
 	rm -rf coverage/*
 	mkdir -p coverage/integration

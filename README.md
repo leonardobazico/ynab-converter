@@ -1,9 +1,11 @@
-# Convert CashApp csv report to You Need a Budget (YNAB) format
+# CLI to convert files into You Need a Budget (YNAB) format
 
 [![cashapp-ynab-converter-pipeline](https://github.com/leonardobazico/cashapp-ynab-converter/actions/workflows/go.yml/badge.svg)](https://github.com/leonardobazico/cashapp-ynab-converter/actions/workflows/go.yml)
 ![coverage](https://raw.githubusercontent.com/leonardobazico/cashapp-ynab-converter/badges/.badges/main/coverage.svg)
 
 This solution is based on the [Formatting a CSV File](https://support.ynab.com/en_us/formatting-a-csv-file-an-overview-BJvczkuRq)
+
+## CashApp
 
 The CashApp csv report is a bit different than the YNAB csv report. This tool converts the CashApp csv report to the YNAB csv report.
 
@@ -29,12 +31,10 @@ Date,Payee,Memo,Amount
 
 ```
 
-## Usage
-
-This cli tool is called ynabconverter. It takes one argument, the input file name, and it outputs to stdout.
+### Usage
 
 ```bash
-ynabconverter input.csv > output.csv
+ynabconverter cashapp -file cashapp_report.csv > ynab_transactions.csv
 ```
 
 ## Tech stack

@@ -22,11 +22,11 @@ func TestCash2ynab(t *testing.T) {
 
 	projectFolderPath := getProjectFolderPath(t)
 	cli := buildCli(t, projectFolderPath)
-	t.Run("should run ynabconverter command and get the output", func(t *testing.T) {
+	t.Run("should run ynabconverter cashapp command and get the output", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cmd := exec.Command(cli, "tests/utils/examples/cash_app_report_sample.csv")
+		cmd := exec.Command(cli, "cashapp", "-file", "tests/utils/examples/cash_app_report_sample.csv")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
@@ -44,7 +44,7 @@ func TestCash2ynab(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cmd := exec.Command(cli, "tests/utils/examples/does-not-exist.csv")
+		cmd := exec.Command(cli, "cashapp", "-file", "tests/utils/examples/does-not-exist.csv")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
@@ -58,11 +58,29 @@ func TestCash2ynab(t *testing.T) {
 		)
 	})
 
+	t.Run("should fail when file is not provided", func(t *testing.T) {
+		t.Parallel()
+
+		// Given
+		cmd := exec.Command(cli, "cashapp", "-file", "")
+		cmd.Env = append([]string{}, os.Environ()...)
+		cmd.Dir = projectFolderPath
+		// When
+		output, err := cmd.CombinedOutput()
+		// Then
+		require.Error(t, err)
+		assert.Contains(
+			t,
+			string(output),
+			"it is required to set a file to be converted",
+		)
+	})
+
 	t.Run("should handle absolute path", func(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cmd := exec.Command(cli, projectFolderPath+"/tests/utils/examples/cash_app_report_sample.csv")
+		cmd := exec.Command(cli, "cashapp", "-file", projectFolderPath+"/tests/utils/examples/cash_app_report_sample.csv")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
@@ -80,7 +98,7 @@ func TestCash2ynab(t *testing.T) {
 		t.Parallel()
 
 		// Given
-		cmd := exec.Command(cli, "./tests/utils/examples/cash_app_report_sample.csv")
+		cmd := exec.Command(cli, "cashapp", "-file", "./tests/utils/examples/cash_app_report_sample.csv")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
@@ -100,6 +118,8 @@ func TestCash2ynab(t *testing.T) {
 		// Given
 		cmd := exec.Command(
 			cli,
+			"cashapp",
+			"-file",
 			"../"+filepath.Base(projectFolderPath)+
 				"/tests/utils/examples/cash_app_report_sample.csv",
 		)
@@ -134,9 +154,9 @@ func buildCli(tb testing.TB, projectFolderPath string) string {
 	cliPath := "bin/ynabconverter-test"
 	var cmd *exec.Cmd
 	if _, present := os.LookupEnv("GOCOVERDIR"); present {
-		cmd = exec.Command("go", "build", "-cover", "-o", cliPath, "cmd/ynabconverter/main.go")
+		cmd = exec.Command("go", "build", "-cover", "-o", cliPath, "./cmd/ynabconverter/...")
 	} else {
-		cmd = exec.Command("go", "build", "-o", cliPath, "cmd/ynabconverter/main.go")
+		cmd = exec.Command("go", "build", "-o", cliPath, "./cmd/ynabconverter/...")
 	}
 	cmd.Dir = projectFolderPath
 	err := cmd.Run()
