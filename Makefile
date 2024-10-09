@@ -2,12 +2,12 @@ GOTEST=gotestsum --format=testname
 
 install-ci-dependencies:
 	go version
-	go install github.com/securego/gosec/v2/cmd/gosec@latest
-	go install github.com/go-critic/go-critic/cmd/gocritic@latest
+	go install github.com/securego/gosec/v2/cmd/gosec@v2.20.0
+	go install github.com/go-critic/go-critic/cmd/gocritic@v0.11.4
 
 
 setup-dev: install-ci-dependencies
-	go install gotest.tools/gotestsum@latest
+	go install gotest.tools/gotestsum@v1.12.0
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.60.3
 
 lint:
