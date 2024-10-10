@@ -13,8 +13,6 @@ func TestTransaction(t *testing.T) {
 	t.Parallel()
 
 	t.Run("should implement report.Transactioner interface", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		transaction := reports.Transaction{
 			Counterparty: "MTA*NYCT PAYGO",

@@ -16,8 +16,6 @@ func TestYnabRecordTransformer(t *testing.T) {
 	t.Parallel()
 
 	t.Run("should implement report.ReportExporter interface", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		ynabRecordTransformer := ynab.NewYnabRecordTransformer()
 		// When
@@ -27,8 +25,6 @@ func TestYnabRecordTransformer(t *testing.T) {
 	})
 
 	t.Run("should return the header", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		ynabRecordTransformer := ynab.NewYnabRecordTransformer()
 		// When
@@ -38,8 +34,6 @@ func TestYnabRecordTransformer(t *testing.T) {
 	})
 
 	t.Run("should return a record", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		ynabRecordTransformer := ynab.NewYnabRecordTransformer()
 		// When
@@ -83,10 +77,7 @@ func TestYnabRecordTransformer(t *testing.T) {
 
 	t.Run("GetRecordsWithHeader", func(t *testing.T) {
 		t.Parallel()
-
 		t.Run("should return records with header as first item", func(t *testing.T) {
-			t.Parallel()
-
 			// Given
 			ynabRecordTransformer := ynab.NewYnabRecordTransformer()
 			// When
@@ -123,8 +114,6 @@ func TestYnabRecordTransformer(t *testing.T) {
 		})
 
 		t.Run("should return an error if the transaction amount is invalid", func(t *testing.T) {
-			t.Parallel()
-
 			// Given
 			ynabRecordTransformer := ynab.NewYnabRecordTransformer()
 			// When

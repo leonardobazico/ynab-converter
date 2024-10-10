@@ -27,8 +27,6 @@ func TestYnabTransaction(t *testing.T) {
 	// ```
 
 	t.Run("should create a ynab.Transaction from a Transaction", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		transaction := reports.Transaction{
 			Counterparty: "MTA*NYCT PAYGO",
@@ -50,8 +48,6 @@ func TestYnabTransaction(t *testing.T) {
 	})
 
 	t.Run("should create a YnabTransaction from a cashapp.Transaction", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		cashAppTransaction := cashapp.Transaction{
 			TransactionID:        "rmgsrz",
@@ -83,8 +79,6 @@ func TestYnabTransaction(t *testing.T) {
 	})
 
 	t.Run("should fail to create YnabTransaction if transaction.GetDatetime() fails", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		cashAppNotValidDateTransaction := cashapp.Transaction{
 			Date: "not a valid date",
@@ -96,8 +90,6 @@ func TestYnabTransaction(t *testing.T) {
 	})
 
 	t.Run("should fail to create YnabTransaction if transaction.GetAmount() fails", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		cashAppNotValidAmountTransaction := cashapp.Transaction{
 			Date:   "2023-10-06 23:59:59 EDT",

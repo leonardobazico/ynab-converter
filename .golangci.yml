@@ -32,6 +32,9 @@ linters-settings:
       - standard
       - default
       - prefix(ynabconverter)
+  paralleltest:
+    ignore-missing: false
+    ignore-missing-subtests: true
 
 issues:
   exclude-rules:

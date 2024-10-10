@@ -14,8 +14,6 @@ func TestCsvImporter(t *testing.T) {
 	t.Parallel()
 
 	t.Run("should return error when file does not exist", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		filePath := "examples/does-not-exist.csv"
 		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
@@ -31,8 +29,6 @@ func TestCsvImporter(t *testing.T) {
 	})
 
 	t.Run("should return error when file exists but is not a csv", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		filePath := "examples/not-a-csv.txt"
 		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
@@ -44,8 +40,6 @@ func TestCsvImporter(t *testing.T) {
 	})
 
 	t.Run("should not return error when file exists", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		filePath := "examples/cash_app_report.csv"
 		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
@@ -56,8 +50,6 @@ func TestCsvImporter(t *testing.T) {
 	})
 
 	t.Run("should not return error when file exists and is empty", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		filePath := "examples/empty.csv"
 		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
@@ -69,8 +61,6 @@ func TestCsvImporter(t *testing.T) {
 	})
 
 	t.Run("should ignore title from records", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		filePath := "examples/just_title.csv"
 		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)
@@ -82,8 +72,6 @@ func TestCsvImporter(t *testing.T) {
 	})
 
 	t.Run("should return matrix of strings when file exists and is not empty", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		filePath := "examples/cash_app_report.csv"
 		csvReader := file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS)

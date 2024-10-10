@@ -16,8 +16,6 @@ func TestCashAppReportImporter(t *testing.T) {
 	t.Parallel()
 
 	t.Run("should return error when file does not exist", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS))
 		// When
@@ -27,8 +25,6 @@ func TestCashAppReportImporter(t *testing.T) {
 	})
 
 	t.Run("should parse file and get an array of cashapp.Transaction", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS))
 		// When
@@ -56,8 +52,6 @@ func TestCashAppReportImporter(t *testing.T) {
 	})
 
 	t.Run("should implement report.ReportImporter interface", func(t *testing.T) {
-		t.Parallel()
-
 		// Given
 		cashAppReport := cashapp.NewCashAppReport(file.NewCsvImporterFromFileSytem(utils_test.ExampleFilesFS))
 		// When
