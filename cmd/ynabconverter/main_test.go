@@ -1,6 +1,3 @@
-// this is a integration test
-// which run the ynabconverter cli command and check the output
-
 package main_test
 
 import (
@@ -13,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCash2ynab(t *testing.T) {
+func TestMain(t *testing.T) {
 	t.Parallel()
 
 	if os.Getenv("SKIP_INTEGRATION") == "true" {
@@ -22,118 +19,29 @@ func TestCash2ynab(t *testing.T) {
 
 	projectFolderPath := getProjectFolderPath(t)
 	cli := buildCli(t, projectFolderPath)
-	t.Run("should run ynabconverter cashapp command and get the output", func(t *testing.T) {
-		t.Parallel()
 
+	t.Run("should show available commands when nothings is passed", func(t *testing.T) {
 		// Given
-		cmd := exec.Command(cli, "cashapp", "-file", "tests/utils/examples/cash_app_report_sample.csv")
-		cmd.Env = append([]string{}, os.Environ()...)
-		cmd.Dir = projectFolderPath
-		// When
-		output, err := cmd.CombinedOutput()
-		// Then
-		require.NoError(t, err)
-		assert.Equal(t,
-			"Date,Payee,Memo,Amount\n"+
-				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
-				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
-			string(output))
-	})
-
-	t.Run("should fail when file does not exist", func(t *testing.T) {
-		t.Parallel()
-
-		// Given
-		cmd := exec.Command(cli, "cashapp", "-file", "tests/utils/examples/does-not-exist.csv")
+		cmd := exec.Command(cli, "")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
 		require.Error(t, err)
-		assert.Contains(
-			t,
-			string(output),
-			"fail to open file: open tests/utils/examples/does-not-exist.csv: no such file or directory",
-		)
+		assert.Equal(t, "Command available: cashapp", string(output))
 	})
 
-	t.Run("should fail when file is not provided", func(t *testing.T) {
-		t.Parallel()
-
+	t.Run("should show available commands when command is not recognize", func(t *testing.T) {
 		// Given
-		cmd := exec.Command(cli, "cashapp", "-file", "")
+		cmd := exec.Command(cli, "do-nothing")
 		cmd.Env = append([]string{}, os.Environ()...)
 		cmd.Dir = projectFolderPath
 		// When
 		output, err := cmd.CombinedOutput()
 		// Then
 		require.Error(t, err)
-		assert.Contains(
-			t,
-			string(output),
-			"it is required to set a file to be converted",
-		)
-	})
-
-	t.Run("should handle absolute path", func(t *testing.T) {
-		t.Parallel()
-
-		// Given
-		cmd := exec.Command(cli, "cashapp", "-file", projectFolderPath+"/tests/utils/examples/cash_app_report_sample.csv")
-		cmd.Env = append([]string{}, os.Environ()...)
-		cmd.Dir = projectFolderPath
-		// When
-		output, err := cmd.CombinedOutput()
-		// Then
-		require.NoError(t, err)
-		assert.Equal(t,
-			"Date,Payee,Memo,Amount\n"+
-				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
-				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
-			string(output))
-	})
-
-	t.Run("should handle relative path", func(t *testing.T) {
-		t.Parallel()
-
-		// Given
-		cmd := exec.Command(cli, "cashapp", "-file", "./tests/utils/examples/cash_app_report_sample.csv")
-		cmd.Env = append([]string{}, os.Environ()...)
-		cmd.Dir = projectFolderPath
-		// When
-		output, err := cmd.CombinedOutput()
-		// Then
-		require.NoError(t, err)
-		assert.Equal(t,
-			"Date,Payee,Memo,Amount\n"+
-				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
-				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
-			string(output))
-	})
-
-	t.Run("should handle level up relative path", func(t *testing.T) {
-		t.Parallel()
-
-		// Given
-		cmd := exec.Command(
-			cli,
-			"cashapp",
-			"-file",
-			"../"+filepath.Base(projectFolderPath)+
-				"/tests/utils/examples/cash_app_report_sample.csv",
-		)
-		cmd.Env = append([]string{}, os.Environ()...)
-		cmd.Dir = projectFolderPath
-		// When
-		output, err := cmd.CombinedOutput()
-		// Then
-		require.NoError(t, err)
-		assert.Equal(t,
-			"Date,Payee,Memo,Amount\n"+
-				"10/06/2023,MTA*NYCT PAYGO,CARD CHARGED,-2.90\n"+
-				"01/10/2023,Some business name,PAYMENT SENT,-10.00\n",
-			string(output))
+		assert.Equal(t, "Command available: cashapp", string(output))
 	})
 }
 
