@@ -7,12 +7,12 @@ import (
 	"ynabconverter/pkg/reports"
 )
 
-type ReportImporter struct {
+type Importer struct {
 	fileRecordsGetter file.RecordsGetter
 	transactions      []reports.Transactioner
 }
 
-func (cashApp *ReportImporter) ParseFileRecords(filePath string) error {
+func (cashApp *Importer) ParseFileRecords(filePath string) error {
 	records, err := cashApp.fileRecordsGetter.GetRecordsFrom(filePath)
 	if err != nil {
 		return fmt.Errorf("fail to get records from file: %w", err)
@@ -29,14 +29,14 @@ func (cashApp *ReportImporter) ParseFileRecords(filePath string) error {
 	return nil
 }
 
-func (cashApp *ReportImporter) GetTransactions() []reports.Transactioner {
+func (cashApp *Importer) GetTransactions() []reports.Transactioner {
 	return cashApp.transactions
 }
 
-func NewCashAppReport(fileRecordsGetter file.RecordsGetter) ReportImporter {
-	return ReportImporter{fileRecordsGetter: fileRecordsGetter, transactions: []reports.Transactioner{}}
+func NewCashAppReport(fileRecordsGetter file.RecordsGetter) Importer {
+	return Importer{fileRecordsGetter: fileRecordsGetter, transactions: []reports.Transactioner{}}
 }
 
-func NewCashAppReportCsvImporter() ReportImporter {
+func NewCashAppReportCsvImporter() Importer {
 	return NewCashAppReport(file.NewCsvImporter())
 }
