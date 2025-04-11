@@ -36,7 +36,7 @@ jobs:
       - name: Lint
         uses: golangci/golangci-lint-action@v7
         with:
-          version: v1.60
+          version: v2.0.2
 
       - name: Security check
         run: make security-check

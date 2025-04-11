@@ -8,7 +8,7 @@ install-ci-dependencies:
 
 setup-dev: install-ci-dependencies
 	go install gotest.tools/gotestsum@v1.12.0
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.60.3
+	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.0.2
 
 lint:
 	golangci-lint run ./...
